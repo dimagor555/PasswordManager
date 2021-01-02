@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.dimagor555.javafxapp.CreateController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.dimagor555.javafxapp.controllers.CreateController">
    <children>
       <Label layoutX="40.0" layoutY="51.0" text="Сайт:">
          <font>
@@ -22,7 +22,7 @@
       </Label>
       <TextField fx:id="fieldWebsite" layoutX="151.0" layoutY="49.0" />
       <TextField fx:id="fieldEmail" layoutX="151.0" layoutY="99.0" />
-      <Button fx:id="btnPasswdGenerator" layoutX="374.0" layoutY="46.0" mnemonicParsing="false" text="Сгенерировать Пароль">
+      <Button fx:id="generatePasswordBtn" layoutX="374.0" layoutY="46.0" mnemonicParsing="false" text="Сгенерировать Пароль">
          <font>
             <Font size="15.0" />
          </font>
@@ -33,7 +33,7 @@
          </font>
       </Label>
       <TextField fx:id="fieldPasswd" layoutX="151.0" layoutY="148.0" />
-      <CheckBox fx:id="boxSim" layoutX="361.0" layoutY="93.0" mnemonicParsing="false" text="Спец символы">
+      <CheckBox fx:id="checkBoxSpecialSymbols" layoutX="361.0" layoutY="93.0" mnemonicParsing="false" text="Спец символы">
          <font>
             <Font size="15.0" />
          </font>

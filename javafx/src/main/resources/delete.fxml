@@ -6,19 +6,19 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.dimagor555.javafxapp.DeleteController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.dimagor555.javafxapp.controllers.DeleteController">
    <children>
       <Label layoutX="21.0" layoutY="14.0" text="Вы уверены, что хотите удалить запись?">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Button fx:id="btnYesDel" layoutX="85.0" layoutY="50.0" mnemonicParsing="false" text="Yes" textFill="#00bf10">
+      <Button fx:id="btnAccept" layoutX="85.0" layoutY="50.0" mnemonicParsing="false" text="Yes" textFill="#00bf10">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="btnNoDel" layoutX="171.0" layoutY="50.0" mnemonicParsing="false" text="No" textFill="#bf0000">
+      <Button fx:id="btnCancel" layoutX="171.0" layoutY="50.0" mnemonicParsing="false" text="No" textFill="#bf0000">
          <font>
             <Font size="14.0" />
          </font>

@@ -1,4 +1,4 @@
-package ru.dimagor555.javafxapp.main;
+package ru.dimagor555.javafxapp.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -20,20 +20,20 @@ public class MainController {
         btnCreate = (Button) root.lookup("#btnCreate");
         btnDelete = (Button) root.lookup("#btnDelete");
 
-        btnUpdate.setOnAction(event -> update());
-        btnCreate.setOnAction(event -> create());
-        btnDelete.setOnAction(event -> delete());
+        btnUpdate.setOnAction(event -> onUpdateBtnClicked());
+        btnCreate.setOnAction(event -> onCreateBtnClicked());
+        btnDelete.setOnAction(event -> onDeleteBtnClicked());
     }
 
-    private void update() {
-
-    }
-
-    private void create() {
+    private void onUpdateBtnClicked() {
 
     }
 
-    private void delete() {
+    private void onCreateBtnClicked() {
+
+    }
+
+    private void onDeleteBtnClicked() {
 
     }
 }

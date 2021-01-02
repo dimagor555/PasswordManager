@@ -1,4 +1,4 @@
-package ru.dimagor555.javafxapp.update;
+package ru.dimagor555.javafxapp.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -6,10 +6,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
-public class UpdateController {
+public class CreateController {
 
     @FXML
-    private Button btnPasswdGenerator;
+    private Button btnGeneratePassword;
 
     @FXML
     private TextField fieldWebsite;
@@ -24,25 +24,20 @@ public class UpdateController {
     private TextField fieldPasswdLength;
 
     @FXML
-    private CheckBox boxSim;
+    private CheckBox checkBoxSpecialSymbols;
 
-    public UpdateController(Pane root) {
+    public CreateController(Pane root) {
         fieldWebsite = (TextField) root.lookup("#fieldWebsite");
         fieldEmail = (TextField) root.lookup("#fieldEmail");
         fieldPasswd = (TextField) root.lookup("#fieldPasswd");
         fieldPasswdLength = (TextField) root.lookup("#fieldPasswdLength");
-        btnPasswdGenerator = (Button) root.lookup("#btnPasswdGenerator");
-        boxSim = (CheckBox) root.lookup("#boxSim");
+        btnGeneratePassword = (Button) root.lookup("#btnGeneratePassword");
+        checkBoxSpecialSymbols = (CheckBox) root.lookup("#checkBoxSpecialSymbols");
 
-        btnPasswdGenerator.setOnAction(event -> gererate());
-        boxSim.setOnAction(event -> specialSymbol());
+        btnGeneratePassword.setOnAction(event -> onPasswordGenerateClicked());
     }
 
-    private void gererate() {
-
-    }
-
-    private void specialSymbol() {
+    private void onPasswordGenerateClicked() {
 
     }
 }

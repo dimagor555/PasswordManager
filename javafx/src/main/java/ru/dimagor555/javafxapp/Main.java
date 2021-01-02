@@ -1,13 +1,13 @@
-package ru.dimagor555.javafxapp.login;
+package ru.dimagor555.javafxapp;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import ru.dimagor555.javafxapp.login.LoginController;
+import ru.dimagor555.javafxapp.controllers.LoginController;
 
-public class Login extends Application {
+public class Main extends Application {
 
     public static final String LOGIN_PANE = "/login.fxml";
 
@@ -26,5 +26,9 @@ public class Login extends Application {
         primaryStage.setOnCloseRequest(event -> System.exit(0));
         primaryStage.setResizable(false);
         primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }
