@@ -2,6 +2,7 @@ package ru.dimagor555.domain.port;
 
 import ru.dimagor555.domain.entity.PasswordRecord;
 
+import java.util.Collection;
 import java.util.Optional;
 
 public interface PasswordRecordRepository {
@@ -11,5 +12,5 @@ public interface PasswordRecordRepository {
 
     Optional<PasswordRecord> delete(PasswordRecord record);
 
-    Optional<PasswordRecord> get(String site, String login);
+    Collection<PasswordRecord> getAll();
 }
