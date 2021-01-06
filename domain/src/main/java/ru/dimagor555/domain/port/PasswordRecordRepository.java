@@ -6,11 +6,13 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface PasswordRecordRepository {
-    Optional<PasswordRecord> create(PasswordRecord record);
+    void create(PasswordRecord record);
 
-    Optional<PasswordRecord> update(PasswordRecord record);
+    void update(PasswordRecord record);
 
-    Optional<PasswordRecord> delete(PasswordRecord record);
+    void delete(PasswordRecord record);
+
+    Optional<PasswordRecord> get(PasswordRecord record);
 
     Collection<PasswordRecord> getAll();
 }

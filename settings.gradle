@@ -1,4 +1,5 @@
 rootProject.name = 'PasswordManager'
 include 'domain'
 include 'javafx'
+include 'usecase'
 
