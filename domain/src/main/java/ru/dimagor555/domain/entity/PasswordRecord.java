@@ -34,4 +34,22 @@ public class PasswordRecord {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PasswordRecord that = (PasswordRecord) o;
+
+        if (!site.equals(that.site)) return false;
+        return login.equals(that.login);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = site.hashCode();
+        result = 31 * result + login.hashCode();
+        return result;
+    }
 }
