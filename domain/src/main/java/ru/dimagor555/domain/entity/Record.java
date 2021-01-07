@@ -1,11 +1,11 @@
 package ru.dimagor555.domain.entity;
 
-public class PasswordRecord {
+public class Record {
     private String site;
     private String login;
     private String password;
 
-    public PasswordRecord(String site, String login, String password) {
+    public Record(String site, String login, String password) {
         this.site = site;
         this.login = login;
         this.password = password;
@@ -40,7 +40,7 @@ public class PasswordRecord {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PasswordRecord that = (PasswordRecord) o;
+        Record that = (Record) o;
 
         if (!site.equals(that.site)) return false;
         return login.equals(that.login);

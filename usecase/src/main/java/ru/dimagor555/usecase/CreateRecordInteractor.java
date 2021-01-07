@@ -1,17 +1,17 @@
 package ru.dimagor555.usecase;
 
-import ru.dimagor555.domain.entity.PasswordRecord;
-import ru.dimagor555.domain.port.PasswordRecordRepository;
+import ru.dimagor555.domain.entity.Record;
+import ru.dimagor555.domain.port.RecordRepository;
 
 public class CreateRecordInteractor extends RecordInteractor implements CreateRecord {
     private final RecordValidator validator = new RecordValidator();
 
-    public CreateRecordInteractor(PasswordRecordRepository recordRepository) {
+    public CreateRecordInteractor(RecordRepository recordRepository) {
         super(recordRepository);
     }
 
     @Override
-    public void execute(PasswordRecord record, Callback callback) {
+    public void execute(Record record, Callback callback) {
         validator.validateRecord(record);
 
         if (recordRepository.get(record).isPresent()) {

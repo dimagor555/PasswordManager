@@ -1,12 +1,12 @@
 package ru.dimagor555.usecase;
 
-import ru.dimagor555.domain.entity.PasswordRecord;
+import ru.dimagor555.domain.entity.Record;
 
 public interface CreateRecord {
-    void execute(PasswordRecord record, Callback callback);
+    void execute(Record record, Callback callback);
 
     interface Callback {
-        void onRecordCreated(PasswordRecord record);
+        void onRecordCreated(Record record);
 
         void onUserAlreadyExistError();
     }

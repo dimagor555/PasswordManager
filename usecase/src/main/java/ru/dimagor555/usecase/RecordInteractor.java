@@ -1,11 +1,11 @@
 package ru.dimagor555.usecase;
 
-import ru.dimagor555.domain.port.PasswordRecordRepository;
+import ru.dimagor555.domain.port.RecordRepository;
 
 public class RecordInteractor {
-    protected final PasswordRecordRepository recordRepository;
+    protected final RecordRepository recordRepository;
 
-    public RecordInteractor(PasswordRecordRepository recordRepository) {
+    public RecordInteractor(RecordRepository recordRepository) {
         this.recordRepository = recordRepository;
     }
 }

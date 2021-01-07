@@ -1,9 +1,9 @@
 package ru.dimagor555.usecase;
 
-import ru.dimagor555.domain.port.PasswordRecordRepository;
+import ru.dimagor555.domain.port.RecordRepository;
 
 public class GetAllRecordsInteractor extends RecordInteractor implements GetAllRecords {
-    public GetAllRecordsInteractor(PasswordRecordRepository recordRepository) {
+    public GetAllRecordsInteractor(RecordRepository recordRepository) {
         super(recordRepository);
     }
 
