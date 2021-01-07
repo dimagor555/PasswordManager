@@ -10,9 +10,9 @@ public class RecordValidator {
         } else if (record.getSite() == null || record.getSite().isBlank()) {
             throw new RecordValidationException("Site should not be null");
         } else if (record.getLogin() == null || record.getLogin().isBlank()) {
-            throw new RecordValidationException("Site should not be null");
+            throw new RecordValidationException("Login should not be null");
         } else if (record.getPassword() == null || record.getPassword().isBlank()) {
-            throw new RecordValidationException("Site should not be null");
+            throw new RecordValidationException("Password should not be null");
         }
     }
 }

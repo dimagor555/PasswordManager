@@ -1,6 +1,7 @@
 module javafxapp {
     requires javafx.controls;
     requires javafx.fxml;
+    requires presentation;
 
     opens ru.dimagor555.javafxapp to javafx.fxml;
     opens ru.dimagor555.javafxapp.controllers to javafx.fxml;
