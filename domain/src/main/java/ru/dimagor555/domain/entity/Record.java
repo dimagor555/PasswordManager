@@ -1,14 +1,20 @@
 package ru.dimagor555.domain.entity;
 
 public class Record {
+    private final long id;
     private String site;
     private String login;
     private String password;
 
-    public Record(String site, String login, String password) {
+    public Record(long id, String site, String login, String password) {
+        this.id = id;
         this.site = site;
         this.login = login;
         this.password = password;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getSite() {
@@ -40,16 +46,13 @@ public class Record {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Record that = (Record) o;
+        Record record = (Record) o;
 
-        if (!site.equals(that.site)) return false;
-        return login.equals(that.login);
+        return id == record.id;
     }
 
     @Override
     public int hashCode() {
-        int result = site.hashCode();
-        result = 31 * result + login.hashCode();
-        return result;
+        return (int) (id ^ (id >>> 32));
     }
 }

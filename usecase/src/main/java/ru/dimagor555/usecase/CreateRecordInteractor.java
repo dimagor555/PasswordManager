@@ -14,7 +14,7 @@ public class CreateRecordInteractor extends RecordInteractor implements CreateRe
     public void execute(Record record, Callback callback) {
         validator.validateRecord(record);
 
-        if (recordRepository.get(record).isPresent()) {
+        if (recordRepository.containsBySiteAndLogin(record)) {
             callback.onUserAlreadyExistError();
         } else {
             recordRepository.create(record);
