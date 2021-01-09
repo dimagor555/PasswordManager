@@ -8,6 +8,6 @@ public interface CreateRecord {
     interface Callback {
         void onRecordCreated(Record record);
 
-        void onUserAlreadyExistError();
+        void onRecordAlreadyExistError();
     }
 }
