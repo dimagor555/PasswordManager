@@ -1,7 +1,12 @@
 module javafxapp {
     requires javafx.controls;
     requires javafx.fxml;
+
+    requires domain;
+    requires usecase;
     requires presentation;
+    requires repository;
+    requires passwordgenerator;
 
     opens ru.dimagor555.javafxapp to javafx.fxml;
     opens ru.dimagor555.javafxapp.controllers to javafx.fxml;
