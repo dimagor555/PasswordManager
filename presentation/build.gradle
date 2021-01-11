@@ -1,9 +1,13 @@
 plugins {
-    id 'java'
+    id 'java-library'
 }
 
 group 'ru.dimagor555'
 version '1.0-SNAPSHOT'
+
+java {
+    modularity.inferModulePath = true
+}
 
 repositories {
     mavenCentral()
