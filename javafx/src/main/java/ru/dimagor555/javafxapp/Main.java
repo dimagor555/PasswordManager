@@ -1,31 +1,16 @@
 package ru.dimagor555.javafxapp;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import ru.dimagor555.javafxapp.controllers.LoginController;
+import ru.dimagor555.presentation.Navigator;
 
 public class Main extends Application {
-
-    public static final String LOGIN_PANE = "/login.fxml";
-
-    public static LoginController loginController;
-
     @Override
     public void start(Stage primaryStage) throws Exception {
-        var path = getClass().getResource(LOGIN_PANE);
-        Pane root = FXMLLoader.load(path);
-        loginController = new LoginController(root);
-        Scene scene = new Scene(root);
+        Config config = new Config();
 
-        primaryStage = new Stage();
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Password Manager");
-        primaryStage.setOnCloseRequest(event -> System.exit(0));
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        Navigator navigator = new WindowNavigator(config);
+        navigator.openCreateWindow();
     }
 
     public static void main(String[] args) {
