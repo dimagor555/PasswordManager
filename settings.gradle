@@ -1,6 +1,11 @@
-rootProject.name = 'PasswordManager'
+rootProject.name = 'password-manager'
 include 'domain'
 include 'javafx'
 include 'usecase'
 include 'presentation'
+include 'adapter:repository'
+include 'adapter:password-generator'
+
+findProject(':adapter:repository')?.name = 'repository'
+findProject(':adapter:password-generator')?.name = 'password-generator'
 
