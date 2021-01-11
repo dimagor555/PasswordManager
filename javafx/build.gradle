@@ -7,6 +7,10 @@ plugins {
 group 'ru.dimagor555'
 version '1.0-SNAPSHOT'
 
+java {
+    modularity.inferModulePath = true
+}
+
 repositories {
     mavenCentral()
 }
@@ -14,6 +18,12 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+
+    implementation(project(':domain'))
+    implementation(project(':usecase'))
+    implementation(project(':presentation'))
+    implementation(project(':adapter:repository'))
+    implementation(project(':adapter:password-generator'))
 }
 
 test {
@@ -31,5 +41,13 @@ jlink {
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
     launcher {
         name = 'PasswordManager'
+    }
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'ru.dimagor555.javafxapp.Main'
+        )
     }
 }
