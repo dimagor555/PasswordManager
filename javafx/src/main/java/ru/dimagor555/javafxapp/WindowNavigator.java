@@ -1,10 +1,12 @@
 package ru.dimagor555.javafxapp;
 
 import ru.dimagor555.javafxapp.windows.CreateWindow;
+import ru.dimagor555.javafxapp.windows.LoginWindow;
 import ru.dimagor555.javafxapp.windows.Window;
 import ru.dimagor555.javafxapp.windows.WindowType;
 import ru.dimagor555.passwordgenerator.PasswordGeneratorFactory;
 import ru.dimagor555.presentation.CreatePresenter;
+import ru.dimagor555.presentation.LoginPresenter;
 import ru.dimagor555.presentation.Navigator;
 import ru.dimagor555.usecase.CreateRecord;
 
@@ -20,12 +22,21 @@ public class WindowNavigator implements Navigator {
 
     @Override
     public void openLoginWindow() {
-
+        if (isWindowCreated(WindowType.LOGIN)) {
+            openWindow(WindowType.LOGIN);
+        } else {
+            LoginPresenter presenter = new LoginPresenter(this);
+            Window loginWindow = new LoginWindow(presenter);
+            windows.put(loginWindow.getType(), loginWindow);
+            loginWindow.open();
+        }
     }
 
     @Override
     public void closeLoginWindow() {
-
+        if (isWindowCreated(WindowType.LOGIN)) {
+            closeWindow(WindowType.LOGIN);
+        }
     }
 
     @Override

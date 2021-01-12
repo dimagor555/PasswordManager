@@ -1,13 +1,13 @@
 package ru.dimagor555.javafxapp.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
+import ru.dimagor555.presentation.LoginPresenter;
 
-public class LoginController {
-
+public class LoginController implements LoginPresenter.View {
     @FXML
     private TextField textFieldPassword;
 
@@ -17,10 +17,15 @@ public class LoginController {
     @FXML
     private Label labelError;
 
+    private LoginPresenter presenter;
+
     public LoginController() {
     }
 
-    public LoginController(Pane root) {
+    public LoginController(Parent root, LoginPresenter presenter) {
+        this.presenter = presenter;
+        presenter.setView(this);
+
         textFieldPassword = (TextField) root.lookup("#textFieldPassword");
         btnLogin = (Button) root.lookup("#btnLogin");
         labelError = (Label) root.lookup("#labelError");
@@ -29,6 +34,21 @@ public class LoginController {
     }
 
     private void onLoginClicked() {
+        presenter.login();
+    }
 
+    @Override
+    public void showPasswordError() {
+        labelError.setVisible(true);
+    }
+
+    @Override
+    public void hidePasswordError() {
+        labelError.setVisible(false);
+    }
+
+    @Override
+    public String getPassword() {
+        return textFieldPassword.getText();
     }
 }
