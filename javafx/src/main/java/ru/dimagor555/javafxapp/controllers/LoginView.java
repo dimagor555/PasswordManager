@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import ru.dimagor555.presentation.LoginPresenter;
 
-public class LoginController implements LoginPresenter.View {
+public class LoginView implements LoginPresenter.View {
     @FXML
     private TextField textFieldPassword;
 
@@ -19,10 +19,10 @@ public class LoginController implements LoginPresenter.View {
 
     private LoginPresenter presenter;
 
-    public LoginController() {
+    public LoginView() {
     }
 
-    public LoginController(Parent root, LoginPresenter presenter) {
+    public LoginView(Parent root, LoginPresenter presenter) {
         this.presenter = presenter;
         presenter.setView(this);
 

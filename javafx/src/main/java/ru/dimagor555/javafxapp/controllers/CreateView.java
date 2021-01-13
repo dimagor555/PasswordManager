@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import ru.dimagor555.presentation.CreatePresenter;
 
-public class CreateController implements CreatePresenter.View {
+public class CreateView implements CreatePresenter.View {
 
     @FXML
     private Button btnGeneratePassword;
@@ -40,11 +40,11 @@ public class CreateController implements CreatePresenter.View {
 
     private CreatePresenter presenter;
 
-    public CreateController() {
+    public CreateView() {
 
     }
 
-    public CreateController(Parent root, CreatePresenter presenter) {
+    public CreateView(Parent root, CreatePresenter presenter) {
         this.presenter = presenter;
         presenter.setView(this);
 

@@ -1,10 +1,11 @@
 package ru.dimagor555.javafxapp.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
+import ru.dimagor555.presentation.MainPresenter;
 
-public class MainController {
+public class MainView implements MainPresenter.View {
 
     @FXML
     private Button btnUpdate;
@@ -15,7 +16,13 @@ public class MainController {
     @FXML
     private Button btnDelete;
 
-    public MainController(Pane root) {
+    private MainPresenter presenter;
+
+    public MainView() {
+
+    }
+
+    public MainView(Parent root, MainPresenter presenter) {
         btnUpdate = (Button) root.lookup("#btnUpdate");
         btnCreate = (Button) root.lookup("#btnCreate");
         btnDelete = (Button) root.lookup("#btnDelete");
@@ -26,14 +33,14 @@ public class MainController {
     }
 
     private void onUpdateBtnClicked() {
-
+        presenter.updateSelectedRecord();
     }
 
     private void onCreateBtnClicked() {
-
+        presenter.createSelectedRecord();
     }
 
     private void onDeleteBtnClicked() {
-
+        presenter.deleteSelectedRecord();
     }
 }

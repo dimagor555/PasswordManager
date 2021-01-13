@@ -6,7 +6,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
-public class UpdateController {
+public class UpdateView {
 
     @FXML
     private Button btnGeneratePassword;
@@ -26,7 +26,7 @@ public class UpdateController {
     @FXML
     private CheckBox checkBoxSpecialSymbols;
 
-    public UpdateController(Pane root) {
+    public UpdateView(Pane root) {
         fieldWebsite = (TextField) root.lookup("#fieldWebsite");
         fieldEmail = (TextField) root.lookup("#fieldEmail");
         fieldPasswd = (TextField) root.lookup("#fieldPasswd");
