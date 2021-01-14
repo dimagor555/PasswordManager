@@ -1,43 +1,140 @@
 package ru.dimagor555.javafxapp.controllers;
 
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
+import javafx.scene.Parent;
+import javafx.scene.control.*;
+import ru.dimagor555.presentation.UpdatePresenter;
 
-public class UpdateView {
+public class UpdateView implements UpdatePresenter.View {
 
     @FXML
     private Button btnGeneratePassword;
 
     @FXML
-    private TextField fieldWebsite;
+    private Button btnUpdate;
 
     @FXML
-    private TextField fieldEmail;
+    private TextField fieldSite;
 
     @FXML
-    private TextField fieldPasswd;
+    private TextField fieldLogin;
 
     @FXML
-    private TextField fieldPasswdLength;
+    private TextArea fieldPassword;
+
+    @FXML
+    private ChoiceBox<Integer> chBoxPasswordLen;
 
     @FXML
     private CheckBox checkBoxSpecialSymbols;
 
-    public UpdateView(Pane root) {
-        fieldWebsite = (TextField) root.lookup("#fieldWebsite");
-        fieldEmail = (TextField) root.lookup("#fieldEmail");
-        fieldPasswd = (TextField) root.lookup("#fieldPasswd");
-        fieldPasswdLength = (TextField) root.lookup("#fieldPasswdLength");
+    @FXML
+    private Label lblSiteError;
+
+    @FXML
+    private Label lblLoginError;
+
+    @FXML
+    private Label lblPasswordError;
+
+    private UpdatePresenter presenter;
+
+    public UpdateView() {
+
+    }
+
+    public UpdateView(Parent root,UpdatePresenter  presenter) {
+        this.presenter = presenter;
+        presenter.setView(this);
+
         btnGeneratePassword = (Button) root.lookup("#btnGeneratePassword");
+        btnGeneratePassword.setOnAction(event -> onPasswordGenerateClicked());
+        btnUpdate = (Button) root.lookup("#btnUpdate");
+        btnUpdate.setOnAction(event -> onUpdateClicked());
+
+        fieldSite = (TextField) root.lookup("#fieldSite");
+        fieldLogin = (TextField) root.lookup("#fieldLogin");
+        fieldPassword = (TextArea) root.lookup("#fieldPassword");
+
+        chBoxPasswordLen = (ChoiceBox<Integer>) root.lookup("#chBoxPasswordLen");
+        var items = FXCollections.observableArrayList(8, 12, 16, 24, 32, 48, 64, 72, 100);
+        chBoxPasswordLen.setItems(items);
+        chBoxPasswordLen.setValue(items.get(2));
+
         checkBoxSpecialSymbols = (CheckBox) root.lookup("#checkBoxSpecialSymbols");
 
-        btnGeneratePassword.setOnAction(event -> onPasswordGenerateClicked());
+        lblSiteError = (Label) root.lookup("#lblSiteError");
+        lblLoginError = (Label) root.lookup("#lblLoginError");
+        lblPasswordError = (Label) root.lookup("#lblPasswordError");
     }
 
     private void onPasswordGenerateClicked() {
+        presenter.generatePassword();
+    }
 
+    private void onUpdateClicked() {
+        presenter.update();
+    }
+
+
+    @Override
+    public void showSiteError() {
+        lblSiteError.setVisible(true);
+    }
+
+    @Override
+    public void hideSiteError() {
+        lblSiteError.setVisible(false);
+    }
+
+    @Override
+    public void showLoginError() {
+        lblLoginError.setVisible(true);
+    }
+
+    @Override
+    public void hideLoginError() {
+        lblLoginError.setVisible(false);
+    }
+
+    @Override
+    public void showPasswordError() {
+        lblPasswordError.setVisible(true);
+    }
+
+    @Override
+    public void hidePasswordError() {
+        lblPasswordError.setVisible(false);
+    }
+
+    @Override
+    public void showPassword(String password) {
+        fieldPassword.setText(password);
+    }
+
+    @Override
+    public String getSite() {
+        return fieldSite.getText();
+    }
+
+    @Override
+    public String getLogin() {
+        return fieldLogin.getText();
+    }
+
+    @Override
+    public String getPassword() {
+        return fieldPassword.getText();
+    }
+
+    @Override
+    public int getPasswordLength() {
+        return chBoxPasswordLen.getValue();
+    }
+
+    @Override
+    public boolean isSpecialSymbolsSelected() {
+        return checkBoxSpecialSymbols.isSelected();
     }
 }

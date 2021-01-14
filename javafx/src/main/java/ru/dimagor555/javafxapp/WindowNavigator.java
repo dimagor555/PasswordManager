@@ -2,10 +2,7 @@ package ru.dimagor555.javafxapp;
 
 import ru.dimagor555.javafxapp.windows.*;
 import ru.dimagor555.passwordgenerator.PasswordGeneratorFactory;
-import ru.dimagor555.presentation.CreatePresenter;
-import ru.dimagor555.presentation.LoginPresenter;
-import ru.dimagor555.presentation.MainPresenter;
-import ru.dimagor555.presentation.Navigator;
+import ru.dimagor555.presentation.*;
 import ru.dimagor555.usecase.CreateRecord;
 
 import java.util.HashMap;
@@ -79,12 +76,22 @@ public class WindowNavigator implements Navigator {
 
     @Override
     public void openUpdateWindow() {
-
+        if (isWindowCreated(WindowType.UPDATE)) {
+            openWindow(WindowType.UPDATE);
+        } else {
+            PasswordGeneratorFactory passGenFactory = config.getPassGenFactory();
+            UpdatePresenter presenter = new UpdatePresenter(passGenFactory, this);
+            Window updateWindow = new UpdateWindow(presenter);
+            windows.put(updateWindow.getType(), updateWindow);
+            updateWindow.open();
+        }
     }
 
     @Override
     public void closeUpdateWindow() {
-
+        if (isWindowCreated(WindowType.UPDATE)) {
+            closeWindow(WindowType.UPDATE);
+        }
     }
 
     @Override
