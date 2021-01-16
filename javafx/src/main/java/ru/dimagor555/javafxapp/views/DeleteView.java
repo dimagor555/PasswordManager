@@ -1,4 +1,4 @@
-package ru.dimagor555.javafxapp.controllers;
+package ru.dimagor555.javafxapp.views;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

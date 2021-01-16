@@ -1,18 +1,18 @@
-package ru.dimagor555.javafxapp.controllers;
+package ru.dimagor555.javafxapp.views;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import ru.dimagor555.presentation.CreatePresenter;
+import ru.dimagor555.presentation.UpdatePresenter;
 
-public class CreateView implements CreatePresenter.View {
+public class UpdateView implements UpdatePresenter.View {
 
     @FXML
     private Button btnGeneratePassword;
 
     @FXML
-    private Button btnCreate;
+    private Button btnUpdate;
 
     @FXML
     private TextField fieldSite;
@@ -38,20 +38,20 @@ public class CreateView implements CreatePresenter.View {
     @FXML
     private Label lblPasswordError;
 
-    private CreatePresenter presenter;
+    private UpdatePresenter presenter;
 
-    public CreateView() {
+    public UpdateView() {
 
     }
 
-    public CreateView(Parent root, CreatePresenter presenter) {
+    public UpdateView(Parent root,UpdatePresenter  presenter) {
         this.presenter = presenter;
         presenter.setView(this);
 
         btnGeneratePassword = (Button) root.lookup("#btnGeneratePassword");
         btnGeneratePassword.setOnAction(event -> onPasswordGenerateClicked());
-        btnCreate = (Button) root.lookup("#btnCreate");
-        btnCreate.setOnAction(event -> onCreateClicked());
+        btnUpdate = (Button) root.lookup("#btnUpdate");
+        btnUpdate.setOnAction(event -> onUpdateClicked());
 
         fieldSite = (TextField) root.lookup("#fieldSite");
         fieldLogin = (TextField) root.lookup("#fieldLogin");
@@ -73,9 +73,10 @@ public class CreateView implements CreatePresenter.View {
         presenter.generatePassword();
     }
 
-    private void onCreateClicked() {
-        presenter.create();
+    private void onUpdateClicked() {
+        presenter.update();
     }
+
 
     @Override
     public void showSiteError() {

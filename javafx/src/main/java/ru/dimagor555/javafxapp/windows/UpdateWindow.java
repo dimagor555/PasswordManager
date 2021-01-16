@@ -1,7 +1,7 @@
 package ru.dimagor555.javafxapp.windows;
 
 import javafx.scene.Parent;
-import ru.dimagor555.javafxapp.controllers.UpdateView;
+import ru.dimagor555.javafxapp.views.UpdateView;
 import ru.dimagor555.presentation.UpdatePresenter;
 
 public class UpdateWindow extends Window {

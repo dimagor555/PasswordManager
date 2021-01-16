@@ -1,7 +1,7 @@
 package ru.dimagor555.javafxapp.windows;
 
 import javafx.scene.Parent;
-import ru.dimagor555.javafxapp.controllers.MainView;
+import ru.dimagor555.javafxapp.views.MainView;
 import ru.dimagor555.presentation.MainPresenter;
 
 public class MainWindow extends Window {

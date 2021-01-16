@@ -1,7 +1,7 @@
 package ru.dimagor555.javafxapp.windows;
 
 import javafx.scene.Parent;
-import ru.dimagor555.javafxapp.controllers.CreateView;
+import ru.dimagor555.javafxapp.views.CreateView;
 import ru.dimagor555.presentation.CreatePresenter;
 
 public class CreateWindow extends Window {

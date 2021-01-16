@@ -1,7 +1,7 @@
 package ru.dimagor555.javafxapp.windows;
 
 import javafx.scene.Parent;
-import ru.dimagor555.javafxapp.controllers.LoginView;
+import ru.dimagor555.javafxapp.views.LoginView;
 import ru.dimagor555.presentation.LoginPresenter;
 
 public class LoginWindow extends Window {
