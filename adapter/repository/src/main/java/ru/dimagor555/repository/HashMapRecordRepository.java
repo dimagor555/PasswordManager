@@ -28,8 +28,9 @@ public class HashMapRecordRepository implements RecordRepository {
     }
 
     @Override
-    public boolean containsBySiteAndLogin(Record record) {
-        return getAll().parallelStream().anyMatch(record1 -> record1.equalsBySiteAndLogin(record));
+    public boolean containsBySiteAndLogin(String site, String login) {
+        return getAll().parallelStream().anyMatch(record ->
+                record.getSite().equals(site) && record.getLogin().equals(login));
     }
 
     @Override
