@@ -15,11 +15,12 @@ public class HashMapRecordRepository implements RecordRepository {
     }
 
     @Override
-    public void update(Record record) {
+    public Record update(Record record) {
         var old = records.get(record.getId());
         old.setSite(record.getSite());
         old.setLogin(record.getLogin());
         old.setPassword(record.getPassword());
+        return old;
     }
 
     @Override

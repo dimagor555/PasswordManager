@@ -7,7 +7,7 @@ import java.util.Collection;
 public interface RecordRepository {
     void create(Record record);
 
-    void update(Record record);
+    Record update(Record record);
 
     void delete(Record record);
 
