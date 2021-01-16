@@ -11,7 +11,7 @@ public interface RecordRepository {
 
     void delete(Record record);
 
-    boolean containsBySiteAndLogin(Record record);
+    boolean containsBySiteAndLogin(String site, String login);
 
     Collection<Record> getAll();
 }
