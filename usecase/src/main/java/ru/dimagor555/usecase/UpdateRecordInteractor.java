@@ -11,13 +11,17 @@ public class UpdateRecordInteractor extends RecordInteractor implements UpdateRe
 
     @Override
     public void execute(Record record, Callback callback) {
-        if (recordRepository.containsBySiteAndLogin(record.getSite(), record.getLogin())) {
-            validator.validateRecord(record);
+        if (recordRepository.getById(record.getId()).isPresent()) {
+            if (!recordRepository.containsBySiteAndLogin(record.getSite(), record.getLogin())) {
+                validator.validateRecord(record);
 
-            Record updated = recordRepository.update(record);
-            callback.onRecordUpdated(updated);
+                Record updated = recordRepository.update(record);
+                callback.onRecordUpdated(updated);
+            } else {
+                callback.onRecordAlreadyExistError();
+            }
         } else {
-            callback.onRecordNotFound();
+            callback.onRecordNotFoundError();
         }
     }
 }

@@ -5,6 +5,7 @@ import ru.dimagor555.domain.port.RecordRepository;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Optional;
 
 public class HashMapRecordRepository implements RecordRepository {
     private final HashMap<Long, Record> records = new HashMap<>();
@@ -26,6 +27,11 @@ public class HashMapRecordRepository implements RecordRepository {
     @Override
     public void delete(Record record) {
         records.remove(record.getId());
+    }
+
+    @Override
+    public Optional<Record> getById(long id) {
+        return Optional.ofNullable(records.get(id));
     }
 
     @Override

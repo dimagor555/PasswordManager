@@ -8,6 +8,8 @@ public interface UpdateRecord {
     interface Callback {
         void onRecordUpdated(Record record);
 
-        void onRecordNotFound();
+        void onRecordAlreadyExistError();
+
+        void onRecordNotFoundError();
     }
 }
