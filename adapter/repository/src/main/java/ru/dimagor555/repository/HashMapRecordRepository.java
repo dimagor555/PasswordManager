@@ -35,9 +35,10 @@ public class HashMapRecordRepository implements RecordRepository {
     }
 
     @Override
-    public boolean containsBySiteAndLogin(String site, String login) {
-        return getAll().parallelStream().anyMatch(record ->
-                record.getSite().equals(site) && record.getLogin().equals(login));
+    public Optional<Record> getBySiteAndLogin(String site, String login) {
+        return getAll().parallelStream().filter(record ->
+                record.getSite().equals(site) && record.getLogin().equals(login))
+                .findAny();
     }
 
     @Override

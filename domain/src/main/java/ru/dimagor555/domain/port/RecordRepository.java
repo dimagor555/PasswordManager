@@ -14,7 +14,11 @@ public interface RecordRepository {
 
     Optional<Record> getById(long id);
 
-    boolean containsBySiteAndLogin(String site, String login);
+    Optional<Record> getBySiteAndLogin(String site, String login);
+
+    default boolean containsBySiteAndLogin(String site, String login) {
+        return getBySiteAndLogin(site, login).isPresent();
+    }
 
     Collection<Record> getAll();
 }
