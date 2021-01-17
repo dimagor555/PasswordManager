@@ -24,6 +24,8 @@ dependencies {
     implementation(project(':presentation'))
     implementation(project(':adapter:repository'))
     implementation(project(':adapter:password-generator'))
+    implementation(project(':adapter:id-generator'))
+    implementation(project(':adapter:hasher'))
 }
 
 test {

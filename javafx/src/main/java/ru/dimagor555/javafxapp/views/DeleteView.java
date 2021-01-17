@@ -1,10 +1,10 @@
-package ru.dimagor555.javafxapp.controllers;
+package ru.dimagor555.javafxapp.views;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
-public class DeleteController {
+public class DeleteView {
 
     @FXML
     private Button btnAccept;
@@ -12,7 +12,7 @@ public class DeleteController {
     @FXML
     private Button btnCancel;
 
-    public DeleteController(Pane root) {
+    public DeleteView(Pane root) {
         btnAccept = (Button) root.lookup("#btnAccept");
         btnCancel = (Button) root.lookup("#btnCancel");
 

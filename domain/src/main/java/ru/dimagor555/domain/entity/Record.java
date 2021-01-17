@@ -41,10 +41,6 @@ public class Record {
         this.password = password;
     }
 
-    public boolean equalsBySiteAndLogin(Record that) {
-        return this.site.equals(that.site) && this.login.equals(that.login);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

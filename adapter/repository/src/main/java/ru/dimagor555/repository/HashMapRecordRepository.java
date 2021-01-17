@@ -5,6 +5,7 @@ import ru.dimagor555.domain.port.RecordRepository;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Optional;
 
 public class HashMapRecordRepository implements RecordRepository {
     private final HashMap<Long, Record> records = new HashMap<>();
@@ -15,11 +16,12 @@ public class HashMapRecordRepository implements RecordRepository {
     }
 
     @Override
-    public void update(Record record) {
+    public Record update(Record record) {
         var old = records.get(record.getId());
         old.setSite(record.getSite());
         old.setLogin(record.getLogin());
         old.setPassword(record.getPassword());
+        return old;
     }
 
     @Override
@@ -28,8 +30,15 @@ public class HashMapRecordRepository implements RecordRepository {
     }
 
     @Override
-    public boolean containsBySiteAndLogin(Record record) {
-        return getAll().parallelStream().anyMatch(record1 -> record1.equalsBySiteAndLogin(record));
+    public Optional<Record> getById(long id) {
+        return Optional.ofNullable(records.get(id));
+    }
+
+    @Override
+    public Optional<Record> getBySiteAndLogin(String site, String login) {
+        return getAll().parallelStream().filter(record ->
+                record.getSite().equals(site) && record.getLogin().equals(login))
+                .findAny();
     }
 
     @Override

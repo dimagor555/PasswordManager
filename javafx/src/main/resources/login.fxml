@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.dimagor555.javafxapp.controllers.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.dimagor555.javafxapp.views.LoginView">
    <children>
       <Label layoutX="89.0" layoutY="62.0" text="Введите Пароль:">
          <font>
@@ -15,7 +12,7 @@
          </font>
       </Label>
       <TextField fx:id="textFieldPassword" layoutX="76.0" layoutY="87.0" />
-      <Label fx:id="labelError" layoutX="101.0" layoutY="112.0" text="Неверный пароль" textFill="RED" />
+      <Label fx:id="labelError" layoutX="101.0" layoutY="112.0" text="Неверный пароль" textFill="RED" visible="false" />
       <Button fx:id="btnLogin" layoutX="126.0" layoutY="136.0" mnemonicParsing="false" text="Войти" />
    </children>
 </AnchorPane>

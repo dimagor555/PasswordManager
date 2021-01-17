@@ -10,7 +10,7 @@ public class Main extends Application {
         Config config = new Config();
 
         Navigator navigator = new WindowNavigator(config);
-        navigator.openCreateWindow();
+        navigator.openLoginWindow();
     }
 
     public static void main(String[] args) {

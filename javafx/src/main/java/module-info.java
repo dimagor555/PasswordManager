@@ -7,12 +7,14 @@ module javafxapp {
     requires presentation;
     requires repository;
     requires passwordgenerator;
+    requires idgenerator;
+    requires hasher;
 
     opens ru.dimagor555.javafxapp to javafx.fxml;
-    opens ru.dimagor555.javafxapp.controllers to javafx.fxml;
+    opens ru.dimagor555.javafxapp.views to javafx.fxml;
     opens ru.dimagor555.javafxapp.windows to javafx.fxml;
 
     exports ru.dimagor555.javafxapp;
-    exports ru.dimagor555.javafxapp.controllers;
+    exports ru.dimagor555.javafxapp.views;
     exports ru.dimagor555.javafxapp.windows;
 }
