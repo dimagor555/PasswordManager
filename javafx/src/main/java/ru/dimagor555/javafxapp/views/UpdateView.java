@@ -74,7 +74,7 @@ public class UpdateView implements UpdatePresenter.View {
     }
 
     private void onUpdateClicked() {
-        presenter.update();
+        presenter.updateRecord();
     }
 
 
@@ -106,6 +106,16 @@ public class UpdateView implements UpdatePresenter.View {
     @Override
     public void hidePasswordError() {
         lblPasswordError.setVisible(false);
+    }
+
+    @Override
+    public void showSite(String site) {
+        fieldSite.setText(site);
+    }
+
+    @Override
+    public void showLogin(String login) {
+        fieldLogin.setText(login);
     }
 
     @Override

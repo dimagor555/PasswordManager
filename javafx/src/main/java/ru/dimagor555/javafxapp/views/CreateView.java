@@ -74,7 +74,7 @@ public class CreateView implements CreatePresenter.View {
     }
 
     private void onCreateClicked() {
-        presenter.create();
+        presenter.createRecord();
     }
 
     @Override
@@ -110,6 +110,13 @@ public class CreateView implements CreatePresenter.View {
     @Override
     public void showPassword(String password) {
         fieldPassword.setText(password);
+    }
+
+    @Override
+    public void clearFields() {
+        fieldSite.clear();
+        fieldLogin.clear();
+        fieldPassword.clear();
     }
 
     @Override
