@@ -1,67 +1,66 @@
 package ru.dimagor555.presentation;
 
+import ru.dimagor555.domain.entity.Record;
 import ru.dimagor555.passwordgenerator.PasswordGeneratorFactory;
-import ru.dimagor555.passwordgenerator.PasswordGeneratorType;
-import ru.dimagor555.usecase.GeneratePassword;
-import ru.dimagor555.usecase.GeneratePasswordInteractor;
+import ru.dimagor555.usecase.UpdateRecord;
 
-public class UpdatePresenter {
-    private final GeneratePassword genAlphanumPass;
-    private final GeneratePassword genSpecSymPass;
-    private final Navigator navigator;
+public class UpdatePresenter extends CreateUpdatePresenter {
+    private final UpdateRecord updateRecord;
+    private long currentRecordId;
     private View view;
 
-    public UpdatePresenter(PasswordGeneratorFactory passGenFactory, Navigator navigator) {
-        this.genAlphanumPass = new GeneratePasswordInteractor(
-                passGenFactory.getGenerator(PasswordGeneratorType.ALPHANUMERIC));
-        this.genSpecSymPass = new GeneratePasswordInteractor(
-                passGenFactory.getGenerator(PasswordGeneratorType.SPECIAL_SYMBOLS));
-        this.navigator = navigator;
+    public UpdatePresenter(UpdateRecord updateRecord, PasswordGeneratorFactory passGenFactory,
+                           Navigator navigator) {
+        super(passGenFactory, navigator);
+        this.updateRecord = updateRecord;
     }
 
     public void setView(View view) {
+        super.setView(view);
         this.view = view;
     }
 
-    public void generatePassword() {
-        int passwordLen = view.getPasswordLength();
-        boolean specialSymbols = view.isSpecialSymbolsSelected();
-        String password;
-        if (specialSymbols) {
-            password = genSpecSymPass.execute(passwordLen);
-        } else {
-            password = genAlphanumPass.execute(passwordLen);
+    public void updateRecord() {
+        if (validateRecord()) {
+            String site = view.getSite();
+            String login = view.getLogin();
+            String password = view.getPassword();
+
+            Record toUpdate = new Record(currentRecordId, site, login, password);
+            System.out.println("execute");
+            updateRecord.execute(toUpdate, new UpdateRecord.Callback() {
+                @Override
+                public void onRecordUpdated(Record record) {
+                    navigator.closeUpdateWindow();
+                    navigator.updateMainWindow();
+                }
+
+                @Override
+                public void onRecordAlreadyExistError() {
+                    navigator.showRecordAlreadyExistsDialog();
+                }
+
+                @Override
+                public void onRecordNotFoundError() {
+                    navigator.showRecordNotFoundDialog();
+                }
+            });
         }
-        view.showPassword(password);
     }
 
-    public void update() {
-        // not implemented yet
+    public void reset(Record record) {
+        currentRecordId = record.getId();
+        view.hideSiteError();
+        view.hideLoginError();
+        view.hidePasswordError();
+        view.showSite(record.getSite());
+        view.showLogin(record.getLogin());
+        view.showPassword(record.getPassword());
     }
 
-    public interface View {
-        void showSiteError();
+    public interface View extends CreateUpdateView {
+        void showSite(String site);
 
-        void hideSiteError();
-
-        void showLoginError();
-
-        void hideLoginError();
-
-        void showPasswordError();
-
-        void hidePasswordError();
-
-        void showPassword(String password);
-
-        String getSite();
-
-        String getLogin();
-
-        String getPassword();
-
-        int getPasswordLength();
-
-        boolean isSpecialSymbolsSelected();
+        void showLogin(String login);
     }
 }

@@ -1,5 +1,7 @@
 package ru.dimagor555.presentation;
 
+import ru.dimagor555.domain.entity.Record;
+
 public interface Navigator {
     void openLoginWindow();
 
@@ -9,17 +11,23 @@ public interface Navigator {
 
     void closeMainWindow();
 
+    void updateMainWindow();
+
     void openCreateWindow();
 
     void closeCreateWindow();
 
-    void openUpdateWindow();
+    void openUpdateWindow(Record toUpdate);
 
     void closeUpdateWindow();
 
-    void openDeleteWindow();
+    void openDeleteWindow(Record toDelete);
 
     void closeDeleteWindow();
 
-    void showRecordAlreadyExistsDialogError();
+    void showRecordAlreadyExistsDialog();
+
+    void showRecordNotFoundDialog();
+
+    void showMasterPasswordNotFoundDialog();
 }
