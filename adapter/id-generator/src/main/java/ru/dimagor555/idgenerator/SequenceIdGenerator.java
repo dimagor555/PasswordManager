@@ -16,6 +16,9 @@ public class SequenceIdGenerator implements IdGenerator {
     @Override
     public long generate() {
         Collection<Record> allRecords = recordRepository.getAll();
+        if (allRecords.size() == 0) {
+            return 0;
+        }
         long maxId = Long.MIN_VALUE;
         for (Record record : allRecords) {
             long currId = record.getId();
