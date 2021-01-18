@@ -75,6 +75,5 @@ public class MainView implements MainPresenter.View {
     public void renderRecords(List<Record> records) {
         tableRecords.getItems().clear();
         tableRecords.setItems(FXCollections.observableList(records));
-        System.out.println("table updated");
     }
 }

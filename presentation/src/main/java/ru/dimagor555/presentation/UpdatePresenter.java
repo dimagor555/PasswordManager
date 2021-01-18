@@ -27,7 +27,6 @@ public class UpdatePresenter extends CreateUpdatePresenter {
             String password = view.getPassword();
 
             Record toUpdate = new Record(currentRecordId, site, login, password);
-            System.out.println("execute");
             updateRecord.execute(toUpdate, new UpdateRecord.Callback() {
                 @Override
                 public void onRecordUpdated(Record record) {

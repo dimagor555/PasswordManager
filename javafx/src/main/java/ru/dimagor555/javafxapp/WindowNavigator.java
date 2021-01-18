@@ -4,10 +4,7 @@ import ru.dimagor555.domain.entity.Record;
 import ru.dimagor555.javafxapp.windows.*;
 import ru.dimagor555.passwordgenerator.PasswordGeneratorFactory;
 import ru.dimagor555.presentation.*;
-import ru.dimagor555.usecase.CreateRecord;
-import ru.dimagor555.usecase.GetAllRecords;
-import ru.dimagor555.usecase.Login;
-import ru.dimagor555.usecase.UpdateRecord;
+import ru.dimagor555.usecase.*;
 
 import java.util.HashMap;
 
@@ -115,12 +112,24 @@ public class WindowNavigator implements Navigator {
 
     @Override
     public void openDeleteWindow(Record toDelete) {
-
+        if (isWindowCreated(WindowType.DELETE)) {
+            DeleteWindow deleteWindow = (DeleteWindow) windows.get(WindowType.DELETE);
+            deleteWindow.getPresenter().reset(toDelete);
+            deleteWindow.open();
+        } else {
+            DeleteRecord deleteRecord = config.deleteRecord();
+            DeletePresenter presenter = new DeletePresenter(deleteRecord, this);
+            Window deleteWindow = new DeleteWindow(presenter);
+            windows.put(deleteWindow.getType(), deleteWindow);
+            openDeleteWindow(toDelete);
+        }
     }
 
     @Override
     public void closeDeleteWindow() {
-
+        if (isWindowCreated(WindowType.DELETE)) {
+            closeWindow(WindowType.DELETE);
+        }
     }
 
     @Override
