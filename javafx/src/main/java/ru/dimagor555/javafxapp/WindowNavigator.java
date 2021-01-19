@@ -1,5 +1,6 @@
 package ru.dimagor555.javafxapp;
 
+import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import ru.dimagor555.domain.entity.Record;
 import ru.dimagor555.javafxapp.windows.*;
@@ -138,12 +139,18 @@ public class WindowNavigator implements Navigator {
 
     @Override
     public void showRecordAlreadyExistsDialog() {
-
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Record for this site and login already exists");
+        alert.showAndWait();
     }
 
     @Override
     public void showRecordNotFoundDialog() {
-
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Record not found");
+        alert.showAndWait();
     }
 
     @Override
