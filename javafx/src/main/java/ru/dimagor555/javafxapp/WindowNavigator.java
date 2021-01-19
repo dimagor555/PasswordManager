@@ -1,5 +1,6 @@
 package ru.dimagor555.javafxapp;
 
+import javafx.stage.Modality;
 import ru.dimagor555.domain.entity.Record;
 import ru.dimagor555.javafxapp.windows.*;
 import ru.dimagor555.passwordgenerator.PasswordGeneratorFactory;
@@ -76,6 +77,7 @@ public class WindowNavigator implements Navigator {
             CreatePresenter presenter = new CreatePresenter(createRecord, passGenFactory, this);
             Window createWindow = new CreateWindow(presenter);
             windows.put(createWindow.getType(), createWindow);
+            setOwnerForWindow(WindowType.MAIN, WindowType.CREATE);
             openCreateWindow();
         }
     }
@@ -99,6 +101,7 @@ public class WindowNavigator implements Navigator {
             UpdatePresenter presenter = new UpdatePresenter(updateRecord, passGenFactory, this);
             Window updateWindow = new UpdateWindow(presenter);
             windows.put(updateWindow.getType(), updateWindow);
+            setOwnerForWindow(WindowType.MAIN, WindowType.UPDATE);
             openUpdateWindow(toUpdate);
         }
     }
@@ -121,6 +124,7 @@ public class WindowNavigator implements Navigator {
             DeletePresenter presenter = new DeletePresenter(deleteRecord, this);
             Window deleteWindow = new DeleteWindow(presenter);
             windows.put(deleteWindow.getType(), deleteWindow);
+            setOwnerForWindow(WindowType.MAIN, WindowType.DELETE);
             openDeleteWindow(toDelete);
         }
     }
@@ -157,5 +161,13 @@ public class WindowNavigator implements Navigator {
 
     private void openWindow(WindowType type) {
         windows.get(type).open();
+    }
+
+    private void setOwnerForWindow(WindowType ownerType, WindowType childType) {
+        Window owner = windows.get(ownerType);
+        Window child = windows.get(childType);
+
+        child.getStage().initOwner(owner.getStage().getOwner());
+        child.getStage().initModality(Modality.APPLICATION_MODAL);
     }
 }
