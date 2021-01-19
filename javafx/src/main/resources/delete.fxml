@@ -16,7 +16,7 @@
             <Font size="17.0" />
          </font>
       </Button>
-      <Button fx:id="btnCancel" layoutX="280.0" layoutY="148.0" mnemonicParsing="false" text="Cancel" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="60.0">
+      <Button fx:id="btnCancel" cancelButton="true" layoutX="280.0" layoutY="148.0" mnemonicParsing="false" text="Cancel" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="60.0">
          <font>
             <Font size="17.0" />
          </font>

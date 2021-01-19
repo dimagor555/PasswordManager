@@ -45,4 +45,9 @@ public class DeleteView implements DeletePresenter.View {
     public void setText(String text) {
         this.text.setText(text);
     }
+
+    @Override
+    public void setFocusOnCancelBtn() {
+        btnCancel.requestFocus();
+    }
 }

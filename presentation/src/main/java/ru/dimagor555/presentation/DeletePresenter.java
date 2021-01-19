@@ -23,6 +23,7 @@ public class DeletePresenter {
         view.setText("Are you sure you want to delete record for\n" +
                 "site: " + toDelete.getSite() + "\n" +
                 "login: " + toDelete.getLogin());
+        view.setFocusOnCancelBtn();
     }
 
     public void acceptDelete() {
@@ -41,5 +42,7 @@ public class DeletePresenter {
 
     public interface View {
         void setText(String text);
+        
+        void setFocusOnCancelBtn();
     }
 }
