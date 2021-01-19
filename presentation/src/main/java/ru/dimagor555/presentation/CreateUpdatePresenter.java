@@ -42,21 +42,21 @@ public class CreateUpdatePresenter {
 
         boolean hasErrors = false;
 
-        if (site.length() < 2 || site.length() > 50) {
+        if (site.length() < 2 || site.length() > 50 || site.isBlank()) {
             view.showSiteError();
             hasErrors = true;
         } else {
             view.hideSiteError();
         }
 
-        if (login.length() < 2 || login.length() > 50) {
+        if (login.length() < 2 || login.length() > 50 || login.isBlank()) {
             view.showLoginError();
             hasErrors = true;
         } else {
             view.hideLoginError();
         }
 
-        if (password.length() < 8 || password.length() > 100) {
+        if (password.length() < 8 || password.length() > 100 || password.isBlank()) {
             view.showPasswordError();
             hasErrors = true;
         } else {
