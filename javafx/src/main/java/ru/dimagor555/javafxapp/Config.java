@@ -30,8 +30,16 @@ public class Config {
         return new UpdateRecordInteractor(recordRepository);
     }
 
+    public DeleteRecord deleteRecord() {
+        return new DeleteRecordInteractor(recordRepository);
+    }
+
     public Login login() {
         return new LoginInteractor(masterPasswordRepository, hasher);
+    }
+
+    public SetMasterPassword setMasterPassword() {
+        return new SetMasterPasswordInteractor(masterPasswordRepository, hasher);
     }
 
     public PasswordGeneratorFactory getPassGenFactory() {

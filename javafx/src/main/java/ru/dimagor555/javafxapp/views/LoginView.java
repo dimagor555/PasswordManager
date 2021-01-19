@@ -4,12 +4,12 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
 import ru.dimagor555.presentation.LoginPresenter;
 
 public class LoginView implements LoginPresenter.View {
     @FXML
-    private TextField textFieldPassword;
+    private PasswordField textFieldPassword;
 
     @FXML
     private Button btnLogin;
@@ -26,7 +26,7 @@ public class LoginView implements LoginPresenter.View {
         this.presenter = presenter;
         presenter.setView(this);
 
-        textFieldPassword = (TextField) root.lookup("#textFieldPassword");
+        textFieldPassword = (PasswordField) root.lookup("#textFieldPassword");
         btnLogin = (Button) root.lookup("#btnLogin");
         labelError = (Label) root.lookup("#labelError");
 

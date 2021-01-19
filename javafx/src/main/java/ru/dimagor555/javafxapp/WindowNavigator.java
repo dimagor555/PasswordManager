@@ -1,13 +1,13 @@
 package ru.dimagor555.javafxapp;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.stage.Modality;
 import ru.dimagor555.domain.entity.Record;
 import ru.dimagor555.javafxapp.windows.*;
 import ru.dimagor555.passwordgenerator.PasswordGeneratorFactory;
 import ru.dimagor555.presentation.*;
-import ru.dimagor555.usecase.CreateRecord;
-import ru.dimagor555.usecase.GetAllRecords;
-import ru.dimagor555.usecase.Login;
-import ru.dimagor555.usecase.UpdateRecord;
+import ru.dimagor555.usecase.*;
 
 import java.util.HashMap;
 
@@ -27,6 +27,7 @@ public class WindowNavigator implements Navigator {
             Login login = config.login();
             LoginPresenter presenter = new LoginPresenter(login, this);
             Window loginWindow = new LoginWindow(presenter);
+            loginWindow.getStage().setResizable(false);
             windows.put(loginWindow.getType(), loginWindow);
             loginWindow.open();
         }
@@ -79,6 +80,7 @@ public class WindowNavigator implements Navigator {
             CreatePresenter presenter = new CreatePresenter(createRecord, passGenFactory, this);
             Window createWindow = new CreateWindow(presenter);
             windows.put(createWindow.getType(), createWindow);
+            setOwnerForWindow(WindowType.MAIN, WindowType.CREATE);
             openCreateWindow();
         }
     }
@@ -102,6 +104,7 @@ public class WindowNavigator implements Navigator {
             UpdatePresenter presenter = new UpdatePresenter(updateRecord, passGenFactory, this);
             Window updateWindow = new UpdateWindow(presenter);
             windows.put(updateWindow.getType(), updateWindow);
+            setOwnerForWindow(WindowType.MAIN, WindowType.UPDATE);
             openUpdateWindow(toUpdate);
         }
     }
@@ -115,27 +118,79 @@ public class WindowNavigator implements Navigator {
 
     @Override
     public void openDeleteWindow(Record toDelete) {
-
+        if (isWindowCreated(WindowType.DELETE)) {
+            DeleteWindow deleteWindow = (DeleteWindow) windows.get(WindowType.DELETE);
+            deleteWindow.getPresenter().reset(toDelete);
+            deleteWindow.open();
+        } else {
+            DeleteRecord deleteRecord = config.deleteRecord();
+            DeletePresenter presenter = new DeletePresenter(deleteRecord, this);
+            Window deleteWindow = new DeleteWindow(presenter);
+            windows.put(deleteWindow.getType(), deleteWindow);
+            setOwnerForWindow(WindowType.MAIN, WindowType.DELETE);
+            openDeleteWindow(toDelete);
+        }
     }
 
     @Override
     public void closeDeleteWindow() {
+        if (isWindowCreated(WindowType.DELETE)) {
+            closeWindow(WindowType.DELETE);
+        }
+    }
 
+    @Override
+    public void openMasterPasswordWindow(boolean oldPasswordExists) {
+        if (isWindowCreated(WindowType.MASTER_PASSWORD)) {
+            var passwordWindow = (MasterPasswordWindow) windows.get(WindowType.MASTER_PASSWORD);
+            passwordWindow.getPresenter().reset(oldPasswordExists);
+            passwordWindow.open();
+        } else {
+            SetMasterPassword setMasterPassword = config.setMasterPassword();
+            var presenter = new MasterPasswordPresenter(setMasterPassword, this);
+            Window passwordWindow = new MasterPasswordWindow(presenter);
+            windows.put(passwordWindow.getType(), passwordWindow);
+            passwordWindow.getStage().initModality(Modality.APPLICATION_MODAL);
+            openMasterPasswordWindow(oldPasswordExists);
+        }
+    }
+
+    @Override
+    public void closeMasterPasswordWindow() {
+        if (isWindowCreated(WindowType.MASTER_PASSWORD)) {
+            closeWindow(WindowType.MASTER_PASSWORD);
+        }
     }
 
     @Override
     public void showRecordAlreadyExistsDialog() {
-
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Record for this site and login already exists");
+        alert.showAndWait();
     }
 
     @Override
     public void showRecordNotFoundDialog() {
-
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Record not found");
+        alert.showAndWait();
     }
 
     @Override
     public void showMasterPasswordNotFoundDialog() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Error");
+        alert.setHeaderText("Master password not found");
+        alert.setContentText("Do you want to set master password?");
 
+        var result = alert.showAndWait();
+        result.ifPresent(buttonType -> {
+            if (buttonType == ButtonType.OK) {
+                openMasterPasswordWindow(false);
+            }
+        });
     }
 
     private boolean isWindowCreated(WindowType type) {
@@ -148,5 +203,13 @@ public class WindowNavigator implements Navigator {
 
     private void openWindow(WindowType type) {
         windows.get(type).open();
+    }
+
+    private void setOwnerForWindow(WindowType ownerType, WindowType childType) {
+        Window owner = windows.get(ownerType);
+        Window child = windows.get(childType);
+
+        child.getStage().initOwner(owner.getStage().getOwner());
+        child.getStage().initModality(Modality.APPLICATION_MODAL);
     }
 }

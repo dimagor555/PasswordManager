@@ -20,6 +20,16 @@ public class UpdatePresenter extends CreateUpdatePresenter {
         this.view = view;
     }
 
+    public void reset(Record record) {
+        currentRecordId = record.getId();
+        view.hideSiteError();
+        view.hideLoginError();
+        view.hidePasswordError();
+        view.showSite(record.getSite());
+        view.showLogin(record.getLogin());
+        view.showPassword(record.getPassword());
+    }
+
     public void updateRecord() {
         if (validateRecord()) {
             String site = view.getSite();
@@ -27,7 +37,6 @@ public class UpdatePresenter extends CreateUpdatePresenter {
             String password = view.getPassword();
 
             Record toUpdate = new Record(currentRecordId, site, login, password);
-            System.out.println("execute");
             updateRecord.execute(toUpdate, new UpdateRecord.Callback() {
                 @Override
                 public void onRecordUpdated(Record record) {
@@ -48,14 +57,8 @@ public class UpdatePresenter extends CreateUpdatePresenter {
         }
     }
 
-    public void reset(Record record) {
-        currentRecordId = record.getId();
-        view.hideSiteError();
-        view.hideLoginError();
-        view.hidePasswordError();
-        view.showSite(record.getSite());
-        view.showLogin(record.getLogin());
-        view.showPassword(record.getPassword());
+    public void cancel() {
+        navigator.closeUpdateWindow();
     }
 
     public interface View extends CreateUpdateView {

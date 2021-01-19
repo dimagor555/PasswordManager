@@ -19,6 +19,7 @@ public class StageFactory {
             case CREATE -> "create";
             case UPDATE -> "update";
             case DELETE -> "delete";
+            case MASTER_PASSWORD -> "masterpassword";
         } + ".fxml";
     }
 
@@ -29,6 +30,7 @@ public class StageFactory {
             case CREATE -> "Create";
             case UPDATE -> "Update";
             case DELETE -> "Delete";
+            case MASTER_PASSWORD -> "Set master password";
         };
     }
 }
