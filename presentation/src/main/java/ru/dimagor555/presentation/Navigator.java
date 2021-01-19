@@ -25,6 +25,10 @@ public interface Navigator {
 
     void closeDeleteWindow();
 
+    void openMasterPasswordWindow(boolean oldPasswordExists);
+
+    void closeMasterPasswordWindow();
+
     void showRecordAlreadyExistsDialog();
 
     void showRecordNotFoundDialog();

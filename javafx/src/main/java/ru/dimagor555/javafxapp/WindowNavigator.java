@@ -1,6 +1,7 @@
 package ru.dimagor555.javafxapp;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 import ru.dimagor555.domain.entity.Record;
 import ru.dimagor555.javafxapp.windows.*;
@@ -26,6 +27,7 @@ public class WindowNavigator implements Navigator {
             Login login = config.login();
             LoginPresenter presenter = new LoginPresenter(login, this);
             Window loginWindow = new LoginWindow(presenter);
+            loginWindow.getStage().setResizable(false);
             windows.put(loginWindow.getType(), loginWindow);
             loginWindow.open();
         }
@@ -138,6 +140,29 @@ public class WindowNavigator implements Navigator {
     }
 
     @Override
+    public void openMasterPasswordWindow(boolean oldPasswordExists) {
+        if (isWindowCreated(WindowType.MASTER_PASSWORD)) {
+            var passwordWindow = (MasterPasswordWindow) windows.get(WindowType.MASTER_PASSWORD);
+            passwordWindow.getPresenter().reset(oldPasswordExists);
+            passwordWindow.open();
+        } else {
+            SetMasterPassword setMasterPassword = config.setMasterPassword();
+            var presenter = new MasterPasswordPresenter(setMasterPassword, this);
+            Window passwordWindow = new MasterPasswordWindow(presenter);
+            windows.put(passwordWindow.getType(), passwordWindow);
+            passwordWindow.getStage().initModality(Modality.APPLICATION_MODAL);
+            openMasterPasswordWindow(oldPasswordExists);
+        }
+    }
+
+    @Override
+    public void closeMasterPasswordWindow() {
+        if (isWindowCreated(WindowType.MASTER_PASSWORD)) {
+            closeWindow(WindowType.MASTER_PASSWORD);
+        }
+    }
+
+    @Override
     public void showRecordAlreadyExistsDialog() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -155,7 +180,17 @@ public class WindowNavigator implements Navigator {
 
     @Override
     public void showMasterPasswordNotFoundDialog() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Error");
+        alert.setHeaderText("Master password not found");
+        alert.setContentText("Do you want to set master password?");
 
+        var result = alert.showAndWait();
+        result.ifPresent(buttonType -> {
+            if (buttonType == ButtonType.OK) {
+                openMasterPasswordWindow(false);
+            }
+        });
     }
 
     private boolean isWindowCreated(WindowType type) {

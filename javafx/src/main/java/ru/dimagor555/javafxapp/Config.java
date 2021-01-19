@@ -1,6 +1,5 @@
 package ru.dimagor555.javafxapp;
 
-import ru.dimagor555.domain.entity.MasterPassword;
 import ru.dimagor555.domain.port.*;
 import ru.dimagor555.hasher.DefaultHasher;
 import ru.dimagor555.idgenerator.SequenceIdGenerator;
@@ -37,6 +36,10 @@ public class Config {
 
     public Login login() {
         return new LoginInteractor(masterPasswordRepository, hasher);
+    }
+
+    public SetMasterPassword setMasterPassword() {
+        return new SetMasterPasswordInteractor(masterPasswordRepository, hasher);
     }
 
     public PasswordGeneratorFactory getPassGenFactory() {
