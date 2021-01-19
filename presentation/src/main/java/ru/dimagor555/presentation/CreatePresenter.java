@@ -50,6 +50,10 @@ public class CreatePresenter extends CreateUpdatePresenter {
         }
     }
 
+    public void cancel() {
+        navigator.closeCreateWindow();
+    }
+
     public interface View extends CreateUpdateView {
         void clearFields();
     }

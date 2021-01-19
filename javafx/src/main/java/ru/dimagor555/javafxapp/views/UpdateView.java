@@ -15,6 +15,9 @@ public class UpdateView implements UpdatePresenter.View {
     private Button btnUpdate;
 
     @FXML
+    private Button btnCancel;
+
+    @FXML
     private TextField fieldSite;
 
     @FXML
@@ -52,6 +55,8 @@ public class UpdateView implements UpdatePresenter.View {
         btnGeneratePassword.setOnAction(event -> onPasswordGenerateClicked());
         btnUpdate = (Button) root.lookup("#btnUpdate");
         btnUpdate.setOnAction(event -> onUpdateClicked());
+        btnCancel = (Button) root.lookup("#btnCancel");
+        btnCancel.setOnAction(event -> onCancelClicked());
 
         fieldSite = (TextField) root.lookup("#fieldSite");
         fieldLogin = (TextField) root.lookup("#fieldLogin");
@@ -75,6 +80,10 @@ public class UpdateView implements UpdatePresenter.View {
 
     private void onUpdateClicked() {
         presenter.updateRecord();
+    }
+
+    private void onCancelClicked() {
+        presenter.cancel();
     }
 
 

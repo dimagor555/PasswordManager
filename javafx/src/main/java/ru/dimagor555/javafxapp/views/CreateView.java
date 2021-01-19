@@ -15,6 +15,9 @@ public class CreateView implements CreatePresenter.View {
     private Button btnCreate;
 
     @FXML
+    private Button btnCancel;
+
+    @FXML
     private TextField fieldSite;
 
     @FXML
@@ -52,6 +55,8 @@ public class CreateView implements CreatePresenter.View {
         btnGeneratePassword.setOnAction(event -> onPasswordGenerateClicked());
         btnCreate = (Button) root.lookup("#btnCreate");
         btnCreate.setOnAction(event -> onCreateClicked());
+        btnCancel = (Button) root.lookup("#btnCancel");
+        btnCancel.setOnAction(event -> onCancelClicked());
 
         fieldSite = (TextField) root.lookup("#fieldSite");
         fieldLogin = (TextField) root.lookup("#fieldLogin");
@@ -75,6 +80,10 @@ public class CreateView implements CreatePresenter.View {
 
     private void onCreateClicked() {
         presenter.createRecord();
+    }
+
+    private void onCancelClicked() {
+        presenter.cancel();
     }
 
     @Override
