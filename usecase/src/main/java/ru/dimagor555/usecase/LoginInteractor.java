@@ -3,7 +3,7 @@ package ru.dimagor555.usecase;
 import ru.dimagor555.domain.port.Hasher;
 import ru.dimagor555.domain.port.MasterPasswordRepository;
 
-public class LoginInteractor implements Login {
+public class LoginInteractor extends Interactor implements Login {
     private final MasterPasswordRepository masterPasswordRepository;
     private final Hasher hasher;
 
@@ -14,17 +14,19 @@ public class LoginInteractor implements Login {
 
     @Override
     public void execute(String password, Callback callback) {
-        var masterPassword = masterPasswordRepository.get();
-        if (masterPassword.isPresent()) {
-            String passwordHash = hasher.hash(password);
-            boolean correctPassword = masterPassword.get().isPasswordHashCorrect(passwordHash);
-            if (correctPassword) {
-                callback.onSuccessfulLogin();
+        executeMain(() -> {
+            var masterPassword = masterPasswordRepository.get();
+            if (masterPassword.isPresent()) {
+                String passwordHash = hasher.hash(password);
+                boolean correctPassword = masterPassword.get().isPasswordHashCorrect(passwordHash);
+                if (correctPassword) {
+                    executePost(callback::onSuccessfulLogin);
+                } else {
+                    executePost(callback::onIncorrectPassword);
+                }
             } else {
-                callback.onIncorrectPassword();
+                executePost(callback::onMasterPasswordNotFound);
             }
-        } else {
-            callback.onMasterPasswordNotFound();
-        }
+        });
     }
 }

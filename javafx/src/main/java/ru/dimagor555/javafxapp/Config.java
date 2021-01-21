@@ -8,6 +8,8 @@ import ru.dimagor555.repository.HashMapRecordRepository;
 import ru.dimagor555.repository.InMemoryMasterPasswordRepository;
 import ru.dimagor555.usecase.*;
 
+import java.util.concurrent.Executor;
+
 public class Config {
     private final RecordRepository recordRepository = new HashMapRecordRepository();
     private final MasterPasswordRepository masterPasswordRepository =
@@ -18,28 +20,43 @@ public class Config {
     private final Decryptor decryptor = null;
     private final Hasher hasher = new DefaultHasher();
 
+    private final Executor mainExecutor = new MultiThreadMainExecutor();
+    private final Executor postExecutor = new FxThreadPostExecutor();
+
     public GetAllRecords getAllRecords() {
-        return new GetAllRecordsInteractor(recordRepository);
+        var interactor = new GetAllRecordsInteractor(recordRepository);
+        interactor.buildInteractor(mainExecutor, postExecutor);
+        return interactor;
     }
 
     public CreateRecord createRecord() {
-        return new CreateRecordInteractor(recordRepository, idGenerator);
+        var interactor = new CreateRecordInteractor(recordRepository, idGenerator);
+        interactor.buildInteractor(mainExecutor, postExecutor);
+        return interactor;
     }
 
     public UpdateRecord updateRecord() {
-        return new UpdateRecordInteractor(recordRepository);
+        var interactor = new UpdateRecordInteractor(recordRepository);
+        interactor.buildInteractor(mainExecutor, postExecutor);
+        return interactor;
     }
 
     public DeleteRecord deleteRecord() {
-        return new DeleteRecordInteractor(recordRepository);
+        var interactor = new DeleteRecordInteractor(recordRepository);
+        interactor.buildInteractor(mainExecutor, postExecutor);
+        return interactor;
     }
 
     public Login login() {
-        return new LoginInteractor(masterPasswordRepository, hasher);
+        var interactor = new LoginInteractor(masterPasswordRepository, hasher);
+        interactor.buildInteractor(mainExecutor, postExecutor);
+        return interactor;
     }
 
     public SetMasterPassword setMasterPassword() {
-        return new SetMasterPasswordInteractor(masterPasswordRepository, hasher);
+        var interactor = new SetMasterPasswordInteractor(masterPasswordRepository, hasher);
+        interactor.buildInteractor(mainExecutor, postExecutor);
+        return interactor;
     }
 
     public PasswordGeneratorFactory getPassGenFactory() {

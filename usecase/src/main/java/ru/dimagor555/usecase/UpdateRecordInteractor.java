@@ -13,20 +13,22 @@ public class UpdateRecordInteractor extends RecordInteractor implements UpdateRe
 
     @Override
     public void execute(Record record, Callback callback) {
-        Optional<Record> updatable = recordRepository.getById(record.getId());
-        if (updatable.isPresent()) {
-            Optional<Record> duplicate = recordRepository.getBySiteAndLogin(record.getSite(), record.getLogin());
-            boolean isNotDuplicate = duplicate.isEmpty() || updatable.get().equals(duplicate.get());
-            if (isNotDuplicate) {
-                validator.validateRecord(record);
+        executeMain(() -> {
+            Optional<Record> updatable = recordRepository.getById(record.getId());
+            if (updatable.isPresent()) {
+                Optional<Record> duplicate = recordRepository.getBySiteAndLogin(record.getSite(), record.getLogin());
+                boolean isNotDuplicate = duplicate.isEmpty() || updatable.get().equals(duplicate.get());
+                if (isNotDuplicate) {
+                    validator.validateRecord(record);
 
-                Record updated = recordRepository.update(record);
-                callback.onRecordUpdated(updated);
+                    Record updated = recordRepository.update(record);
+                    executePost(() -> callback.onRecordUpdated(updated));
+                } else {
+                    executePost(callback::onRecordAlreadyExistError);
+                }
             } else {
-                callback.onRecordAlreadyExistError();
+                executePost(callback::onRecordNotFoundError);
             }
-        } else {
-            callback.onRecordNotFoundError();
-        }
+        });
     }
 }

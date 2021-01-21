@@ -10,7 +10,9 @@ public class DeleteRecordInteractor extends RecordInteractor implements DeleteRe
 
     @Override
     public void execute(Record record, Callback callback) {
-        recordRepository.delete(record);
-        callback.onRecordDeleted();
+        executeMain(() -> {
+            recordRepository.delete(record);
+            executePost(callback::onRecordDeleted);
+        });
     }
 }

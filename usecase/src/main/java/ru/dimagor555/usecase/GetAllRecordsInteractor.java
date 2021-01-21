@@ -1,6 +1,9 @@
 package ru.dimagor555.usecase;
 
+import ru.dimagor555.domain.entity.Record;
 import ru.dimagor555.domain.port.RecordRepository;
+
+import java.util.Collection;
 
 public class GetAllRecordsInteractor extends RecordInteractor implements GetAllRecords {
     public GetAllRecordsInteractor(RecordRepository recordRepository) {
@@ -9,6 +12,9 @@ public class GetAllRecordsInteractor extends RecordInteractor implements GetAllR
 
     @Override
     public void execute(Callback callback) {
-        callback.onAllRecordsLoaded(recordRepository.getAll());
+        executeMain(() -> {
+            Collection<Record> allRecords = recordRepository.getAll();
+            executePost(() -> callback.onAllRecordsLoaded(allRecords));
+        });
     }
 }

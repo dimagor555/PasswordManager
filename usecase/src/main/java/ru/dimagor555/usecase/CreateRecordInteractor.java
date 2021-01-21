@@ -15,15 +15,17 @@ public class CreateRecordInteractor extends RecordInteractor implements CreateRe
 
     @Override
     public void execute(RecordCreationModel model, Callback callback) {
-        if (recordRepository.containsBySiteAndLogin(model.site(), model.login())) {
-            callback.onRecordAlreadyExistError();
-        } else {
-            Record record = new Record(idGenerator.generate(),
-                    model.site(), model.login(), model.password());
-            validator.validateRecord(record);
+        executeMain(() -> {
+            if (recordRepository.containsBySiteAndLogin(model.site(), model.login())) {
+                executePost(callback::onRecordAlreadyExistError);
+            } else {
+                Record record = new Record(idGenerator.generate(),
+                        model.site(), model.login(), model.password());
+                validator.validateRecord(record);
 
-            recordRepository.create(record);
-            callback.onRecordCreated(record);
-        }
+                recordRepository.create(record);
+                executePost(() -> callback.onRecordCreated(record));
+            }
+        });
     }
 }
