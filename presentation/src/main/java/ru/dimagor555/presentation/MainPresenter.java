@@ -3,8 +3,6 @@ package ru.dimagor555.presentation;
 import ru.dimagor555.domain.entity.Record;
 import ru.dimagor555.usecase.GetAllRecords;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class MainPresenter {
@@ -22,12 +20,7 @@ public class MainPresenter {
     }
 
     public void update() {
-        getAllRecords.execute(allRecords -> {
-            List<Record> records = new ArrayList<>(allRecords);
-            records.sort(Comparator.comparing(Record::getSite)
-                    .thenComparing(Record::getLogin));
-            view.renderRecords(records);
-        });
+        getAllRecords.execute(allRecords -> view.renderRecords(allRecords));
     }
 
     public void updateSelectedRecord() {
