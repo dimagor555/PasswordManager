@@ -1,10 +1,12 @@
 package ru.dimagor555.javafxapp.views;
 
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.util.Duration;
 import ru.dimagor555.presentation.LoginPresenter;
 
 public class LoginView implements LoginPresenter.View {
@@ -40,6 +42,11 @@ public class LoginView implements LoginPresenter.View {
     @Override
     public void showPasswordError() {
         labelError.setVisible(true);
+        FadeTransition ft = new FadeTransition(new Duration(300), labelError);
+        ft.setFromValue(0);
+        ft.setToValue(1);
+        ft.setCycleCount(1);
+        ft.play();
     }
 
     @Override
@@ -50,5 +57,15 @@ public class LoginView implements LoginPresenter.View {
     @Override
     public String getPassword() {
         return textFieldPassword.getText();
+    }
+
+    @Override
+    public void disableLogin() {
+        btnLogin.setDisable(true);
+    }
+
+    @Override
+    public void enableLogin() {
+        btnLogin.setDisable(false);
     }
 }
