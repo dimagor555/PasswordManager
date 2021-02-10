@@ -1,7 +1,7 @@
 package ru.dimagor555.domain.port;
 
 public interface Encryptor {
-    void setChipher(String chipher);
+    void setKey(String key);
 
     String encrypt(String data);
 }
