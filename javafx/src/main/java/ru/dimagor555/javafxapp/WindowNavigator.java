@@ -49,6 +49,7 @@ public class WindowNavigator implements Navigator {
             MainPresenter presenter = new MainPresenter(getAllRecords, this);
             Window mainWindow = new MainWindow(presenter);
             windows.put(mainWindow.getType(), mainWindow);
+            presenter.update();
             mainWindow.open();
         }
     }
