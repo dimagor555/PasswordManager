@@ -9,6 +9,8 @@ module javafxapp {
     requires passwordgenerator;
     requires idgenerator;
     requires hasher;
+    requires dbdao;
+    requires cryption;
 
     opens ru.dimagor555.javafxapp to javafx.fxml;
     opens ru.dimagor555.javafxapp.views to javafx.fxml;
