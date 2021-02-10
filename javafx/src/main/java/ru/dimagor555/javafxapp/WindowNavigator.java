@@ -49,6 +49,7 @@ public class WindowNavigator implements Navigator {
             MainPresenter presenter = new MainPresenter(getAllRecords, this);
             Window mainWindow = new MainWindow(presenter);
             windows.put(mainWindow.getType(), mainWindow);
+            presenter.update();
             mainWindow.open();
         }
     }
@@ -191,6 +192,15 @@ public class WindowNavigator implements Navigator {
                 openMasterPasswordWindow(false);
             }
         });
+    }
+
+    @Override
+    public void showDatabaseErrorDialog(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Database error");
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     private boolean isWindowCreated(WindowType type) {

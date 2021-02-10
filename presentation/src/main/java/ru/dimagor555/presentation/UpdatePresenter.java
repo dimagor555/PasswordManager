@@ -53,6 +53,11 @@ public class UpdatePresenter extends CreateUpdatePresenter {
                 public void onRecordNotFoundError() {
                     navigator.showRecordNotFoundDialog();
                 }
+
+                @Override
+                public void onDatabaseError(String message) {
+                    navigator.showDatabaseErrorDialog(message);
+                }
             });
         }
     }

@@ -26,6 +26,8 @@ dependencies {
     implementation(project(':adapter:password-generator'))
     implementation(project(':adapter:id-generator'))
     implementation(project(':adapter:hasher'))
+    implementation(project(':adapter:db-dao'))
+    implementation(project(':adapter:cryption'))
 }
 
 test {

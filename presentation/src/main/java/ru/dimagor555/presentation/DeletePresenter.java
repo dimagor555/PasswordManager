@@ -33,6 +33,11 @@ public class DeletePresenter {
                 navigator.closeDeleteWindow();
                 navigator.updateMainWindow();
             }
+
+            @Override
+            public void onDatabaseError(String message) {
+                navigator.showDatabaseErrorDialog(message);
+            }
         });
     }
 

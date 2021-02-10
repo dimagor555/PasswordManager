@@ -6,7 +6,7 @@ import ru.dimagor555.domain.port.MasterPasswordRepository;
 
 import java.util.Optional;
 
-public class SetMasterPasswordInteractor implements SetMasterPassword {
+public class SetMasterPasswordInteractor extends Interactor implements SetMasterPassword {
     private final MasterPasswordRepository masterPasswordRepository;
     private final Hasher hasher;
 
@@ -17,24 +17,26 @@ public class SetMasterPasswordInteractor implements SetMasterPassword {
 
     @Override
     public void execute(String oldPassword, String newPassword, Callback callback) {
-        Optional<MasterPassword> masterPassword = masterPasswordRepository.get();
-        if (masterPassword.isPresent()) {
-            if (oldPassword != null && oldPassword.length() > 16
-                    && oldPassword.length() < 200 && !oldPassword.isBlank()) {
-                String oldPasswordHash = hasher.hash(oldPassword);
-                boolean correctPassword = masterPassword.get()
-                        .isPasswordHashCorrect(oldPasswordHash);
-                if (correctPassword) {
-                    setNewMasterPassword(newPassword);
-                    callback.onPasswordSet();
-                } else {
-                    callback.onOldPasswordIncorrect();
+        executeMain(() -> {
+            Optional<MasterPassword> masterPassword = masterPasswordRepository.get();
+            if (masterPassword.isPresent()) {
+                if (oldPassword != null && oldPassword.length() > 16
+                        && oldPassword.length() < 200 && !oldPassword.isBlank()) {
+                    String oldPasswordHash = hasher.hash(oldPassword);
+                    boolean correctPassword = masterPassword.get()
+                            .isPasswordHashCorrect(oldPasswordHash);
+                    if (correctPassword) {
+                        setNewMasterPassword(newPassword);
+                        executePost(callback::onPasswordSet);
+                    } else {
+                        executePost(callback::onOldPasswordIncorrect);
+                    }
                 }
+            } else {
+                setNewMasterPassword(newPassword);
+                executePost(callback::onPasswordSet);
             }
-        } else {
-            setNewMasterPassword(newPassword);
-            callback.onPasswordSet();
-        }
+        });
     }
 
     @Override
