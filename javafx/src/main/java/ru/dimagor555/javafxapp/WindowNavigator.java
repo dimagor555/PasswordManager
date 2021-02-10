@@ -193,6 +193,15 @@ public class WindowNavigator implements Navigator {
         });
     }
 
+    @Override
+    public void showDatabaseErrorDialog(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Database error");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
     private boolean isWindowCreated(WindowType type) {
         return windows.containsKey(type);
     }

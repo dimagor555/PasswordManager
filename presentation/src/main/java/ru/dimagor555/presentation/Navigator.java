@@ -34,4 +34,6 @@ public interface Navigator {
     void showRecordNotFoundDialog();
 
     void showMasterPasswordNotFoundDialog();
+
+    void showDatabaseErrorDialog(String message);
 }

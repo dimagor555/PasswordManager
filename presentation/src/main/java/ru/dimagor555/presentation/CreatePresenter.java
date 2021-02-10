@@ -46,6 +46,11 @@ public class CreatePresenter extends CreateUpdatePresenter {
                 public void onRecordAlreadyExistError() {
                     navigator.showRecordAlreadyExistsDialog();
                 }
+
+                @Override
+                public void onDatabaseError(String message) {
+                    navigator.showDatabaseErrorDialog(message);
+                }
             });
         }
     }

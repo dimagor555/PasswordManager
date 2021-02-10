@@ -7,7 +7,7 @@ import java.util.List;
 public interface GetAllRecords {
     void execute(Callback callback);
 
-    interface Callback {
+    interface Callback extends DatabaseCallback {
         void onAllRecordsLoaded(List<Record> allRecords);
     }
 }

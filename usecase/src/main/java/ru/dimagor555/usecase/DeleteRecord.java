@@ -5,7 +5,7 @@ import ru.dimagor555.domain.entity.Record;
 public interface DeleteRecord {
     void execute(Record record, Callback callback);
 
-    interface Callback {
+    interface Callback extends DatabaseCallback {
         void onRecordDeleted();
     }
 }

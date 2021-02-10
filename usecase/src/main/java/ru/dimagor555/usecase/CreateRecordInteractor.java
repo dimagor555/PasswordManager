@@ -3,6 +3,7 @@ package ru.dimagor555.usecase;
 import ru.dimagor555.domain.entity.Record;
 import ru.dimagor555.domain.port.IdGenerator;
 import ru.dimagor555.domain.port.RecordRepository;
+import ru.dimagor555.usecase.exception.DatabaseException;
 
 public class CreateRecordInteractor extends RecordInteractor implements CreateRecord {
     private final RecordValidator validator = new RecordValidator();
@@ -19,12 +20,16 @@ public class CreateRecordInteractor extends RecordInteractor implements CreateRe
             if (recordRepository.containsBySiteAndLogin(model.site(), model.login())) {
                 executePost(callback::onRecordAlreadyExistError);
             } else {
-                Record record = new Record(idGenerator.generate(),
-                        model.site(), model.login(), model.password());
-                validator.validateRecord(record);
+                try {
+                    Record record = new Record(idGenerator.generate(),
+                            model.site(), model.login(), model.password());
+                    validator.validateRecord(record);
 
-                recordRepository.create(record);
-                executePost(() -> callback.onRecordCreated(record));
+                    recordRepository.create(record);
+                    executePost(() -> callback.onRecordCreated(record));
+                } catch (DatabaseException e) {
+                    executePost(() -> callback.onDatabaseError(e.getMessage()));
+                }
             }
         });
     }

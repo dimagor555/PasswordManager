@@ -2,6 +2,7 @@ package ru.dimagor555.usecase;
 
 import ru.dimagor555.domain.entity.Record;
 import ru.dimagor555.domain.port.RecordRepository;
+import ru.dimagor555.usecase.exception.DatabaseException;
 
 import java.util.Optional;
 
@@ -21,8 +22,12 @@ public class UpdateRecordInteractor extends RecordInteractor implements UpdateRe
                 if (isNotDuplicate) {
                     validator.validateRecord(record);
 
-                    Record updated = recordRepository.update(record);
-                    executePost(() -> callback.onRecordUpdated(updated));
+                    try {
+                        Record updated = recordRepository.update(record);
+                        executePost(() -> callback.onRecordUpdated(updated));
+                    } catch (DatabaseException e) {
+                        executePost(() -> callback.onDatabaseError(e.getMessage()));
+                    }
                 } else {
                     executePost(callback::onRecordAlreadyExistError);
                 }

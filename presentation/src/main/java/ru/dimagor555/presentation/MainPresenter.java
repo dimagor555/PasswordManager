@@ -20,7 +20,17 @@ public class MainPresenter {
     }
 
     public void update() {
-        getAllRecords.execute(allRecords -> view.renderRecords(allRecords));
+        getAllRecords.execute(new GetAllRecords.Callback() {
+            @Override
+            public void onAllRecordsLoaded(List<Record> allRecords) {
+                view.renderRecords(allRecords);
+            }
+
+            @Override
+            public void onDatabaseError(String message) {
+                navigator.showDatabaseErrorDialog(message);
+            }
+        });
     }
 
     public void updateSelectedRecord() {

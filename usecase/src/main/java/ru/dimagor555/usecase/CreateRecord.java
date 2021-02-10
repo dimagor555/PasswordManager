@@ -5,7 +5,7 @@ import ru.dimagor555.domain.entity.Record;
 public interface CreateRecord {
     void execute(RecordCreationModel model, Callback callback);
 
-    interface Callback {
+    interface Callback extends DatabaseCallback {
         void onRecordCreated(Record record);
 
         void onRecordAlreadyExistError();
