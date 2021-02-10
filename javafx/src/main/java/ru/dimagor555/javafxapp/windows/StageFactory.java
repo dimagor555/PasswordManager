@@ -26,7 +26,7 @@ public class StageFactory {
     private String getTitle(WindowType type) {
         return switch (type) {
             case LOGIN -> "Login";
-            case MAIN -> "Main";
+            case MAIN -> "Password manager";
             case CREATE -> "Create";
             case UPDATE -> "Update";
             case DELETE -> "Delete";
