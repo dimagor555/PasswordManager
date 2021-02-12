@@ -1,5 +1,6 @@
 package ru.dimagor555.dbdao;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -11,6 +12,7 @@ public class RecordModel {
     private long id;
     private String site;
     private String login;
+    @Column(length = 512)
     private String pass;
 
     public RecordModel() {
