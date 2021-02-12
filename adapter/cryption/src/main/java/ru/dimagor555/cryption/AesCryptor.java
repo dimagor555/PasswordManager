@@ -35,6 +35,10 @@ public class AesCryptor implements Encryptor, Decryptor {
         this.key = new SecretKeySpec(keyBytes, "AES");
     }
 
+    protected boolean hasKey() {
+        return key != null;
+    }
+
     @Override
     public String encrypt(String data) {
         try {
