@@ -2,17 +2,25 @@ package ru.dimagor555.presentation;
 
 import ru.dimagor555.domain.entity.Record;
 import ru.dimagor555.passwordgenerator.PasswordGeneratorFactory;
+import ru.dimagor555.usecase.DecryptPassword;
+import ru.dimagor555.usecase.EncryptPassword;
 import ru.dimagor555.usecase.UpdateRecord;
 
 public class UpdatePresenter extends CreateUpdatePresenter {
     private final UpdateRecord updateRecord;
+    private final EncryptPassword encryptPassword;
+    private final DecryptPassword decryptPassword;
     private long currentRecordId;
     private View view;
 
-    public UpdatePresenter(UpdateRecord updateRecord, PasswordGeneratorFactory passGenFactory,
+    public UpdatePresenter(UpdateRecord updateRecord,
+                           EncryptPassword encryptPassword, DecryptPassword decryptPassword,
+                           PasswordGeneratorFactory passGenFactory,
                            Navigator navigator) {
         super(passGenFactory, navigator);
         this.updateRecord = updateRecord;
+        this.encryptPassword = encryptPassword;
+        this.decryptPassword = decryptPassword;
     }
 
     public void setView(View view) {
@@ -28,6 +36,8 @@ public class UpdatePresenter extends CreateUpdatePresenter {
         view.showSite(record.getSite());
         view.showLogin(record.getLogin());
         view.showPassword(record.getPassword());
+        decryptPassword.execute(record.getPassword(), decryptedPassword ->
+                view.showPassword(decryptedPassword));
     }
 
     public void updateRecord() {
@@ -36,30 +46,35 @@ public class UpdatePresenter extends CreateUpdatePresenter {
             String login = view.getLogin();
             String password = view.getPassword();
 
-            Record toUpdate = new Record(currentRecordId, site, login, password);
-            updateRecord.execute(toUpdate, new UpdateRecord.Callback() {
-                @Override
-                public void onRecordUpdated(Record record) {
-                    navigator.closeUpdateWindow();
-                    navigator.updateMainWindow();
-                }
-
-                @Override
-                public void onRecordAlreadyExistError() {
-                    navigator.showRecordAlreadyExistsDialog();
-                }
-
-                @Override
-                public void onRecordNotFoundError() {
-                    navigator.showRecordNotFoundDialog();
-                }
-
-                @Override
-                public void onDatabaseError(String message) {
-                    navigator.showDatabaseErrorDialog(message);
-                }
-            });
+            encryptPassword.execute(password, encryptedPassword ->
+                    executeUpdateRecord(site, login, encryptedPassword));
         }
+    }
+
+    private void executeUpdateRecord(String site, String login, String encryptedPassword) {
+        Record toUpdate = new Record(currentRecordId, site, login, encryptedPassword);
+        updateRecord.execute(toUpdate, new UpdateRecord.Callback() {
+            @Override
+            public void onRecordUpdated(Record record) {
+                navigator.closeUpdateWindow();
+                navigator.updateMainWindow();
+            }
+
+            @Override
+            public void onRecordAlreadyExistError() {
+                navigator.showRecordAlreadyExistsDialog();
+            }
+
+            @Override
+            public void onRecordNotFoundError() {
+                navigator.showRecordNotFoundDialog();
+            }
+
+            @Override
+            public void onDatabaseError(String message) {
+                navigator.showDatabaseErrorDialog(message);
+            }
+        });
     }
 
     public void cancel() {

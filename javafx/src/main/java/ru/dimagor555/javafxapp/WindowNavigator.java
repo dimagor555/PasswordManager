@@ -79,8 +79,10 @@ public class WindowNavigator implements Navigator {
             createWindow.open();
         } else {
             CreateRecord createRecord = config.createRecord();
+            EncryptPassword encryptPassword = config.encryptPassword();
             PasswordGeneratorFactory passGenFactory = config.getPassGenFactory();
-            CreatePresenter presenter = new CreatePresenter(createRecord, passGenFactory, this);
+            CreatePresenter presenter = new CreatePresenter(
+                    createRecord, encryptPassword, passGenFactory, this);
             Window createWindow = new CreateWindow(presenter);
             windows.put(createWindow.getType(), createWindow);
             setOwnerForWindow(WindowType.MAIN, WindowType.CREATE);
@@ -103,8 +105,11 @@ public class WindowNavigator implements Navigator {
             updateWindow.open();
         } else {
             UpdateRecord updateRecord = config.updateRecord();
+            EncryptPassword encryptPassword = config.encryptPassword();
+            DecryptPassword decryptPassword = config.decryptPassword();
             PasswordGeneratorFactory passGenFactory = config.getPassGenFactory();
-            UpdatePresenter presenter = new UpdatePresenter(updateRecord, passGenFactory, this);
+            UpdatePresenter presenter = new UpdatePresenter(updateRecord, encryptPassword,
+                    decryptPassword, passGenFactory, this);
             Window updateWindow = new UpdateWindow(presenter);
             windows.put(updateWindow.getType(), updateWindow);
             setOwnerForWindow(WindowType.MAIN, WindowType.UPDATE);
