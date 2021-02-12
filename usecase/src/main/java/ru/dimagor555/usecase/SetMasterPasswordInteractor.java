@@ -3,6 +3,7 @@ package ru.dimagor555.usecase;
 import ru.dimagor555.domain.entity.MasterPassword;
 import ru.dimagor555.domain.port.Hasher;
 import ru.dimagor555.domain.port.MasterPasswordRepository;
+import ru.dimagor555.usecase.exception.DatabaseException;
 
 import java.util.Optional;
 
@@ -22,19 +23,18 @@ public class SetMasterPasswordInteractor extends Interactor implements SetMaster
             if (masterPassword.isPresent()) {
                 if (oldPassword != null && oldPassword.length() > 16
                         && oldPassword.length() < 200 && !oldPassword.isBlank()) {
-                    String oldPasswordHash = hasher.hash(oldPassword);
-                    boolean correctPassword = masterPassword.get()
-                            .isPasswordHashCorrect(oldPasswordHash);
+                    var password = masterPassword.get();
+                    String salt = password.getSalt();
+                    String oldPasswordHash = hasher.hashPassword(oldPassword, salt);
+                    boolean correctPassword = password.isPasswordHashCorrect(oldPasswordHash);
                     if (correctPassword) {
-                        setNewMasterPassword(newPassword);
-                        executePost(callback::onPasswordSet);
+                        setNewMasterPassword(newPassword, callback);
                     } else {
                         executePost(callback::onOldPasswordIncorrect);
                     }
                 }
             } else {
-                setNewMasterPassword(newPassword);
-                executePost(callback::onPasswordSet);
+                setNewMasterPassword(newPassword, callback);
             }
         });
     }
@@ -44,8 +44,15 @@ public class SetMasterPasswordInteractor extends Interactor implements SetMaster
         execute(null, newPassword, callback);
     }
 
-    private void setNewMasterPassword(String newPassword) {
-        String passwordHash = hasher.hash(newPassword);
-        masterPasswordRepository.set(new MasterPassword(passwordHash));
+    private void setNewMasterPassword(String newPassword, Callback callback) {
+        String salt = hasher.genSalt();
+        String cryptKey = hasher.hashCryptKey(newPassword, salt);
+        String passwordHash = hasher.hashPassword(newPassword, salt);
+        try {
+            masterPasswordRepository.set(new MasterPassword(passwordHash, cryptKey, salt));
+            executePost(callback::onPasswordSet);
+        } catch (DatabaseException e) {
+            executePost(() -> callback.onPasswordNotSet("Password not set:\n" + e.getMessage()));
+        }
     }
 }

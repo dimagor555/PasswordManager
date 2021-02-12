@@ -9,5 +9,7 @@ public interface SetMasterPassword {
         void onOldPasswordIncorrect();
 
         void onPasswordSet();
+
+        void onPasswordNotSet(String message);
     }
 }

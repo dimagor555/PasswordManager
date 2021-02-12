@@ -54,6 +54,11 @@ public class MasterPasswordPresenter {
                 public void onPasswordSet() {
                     navigator.closeMasterPasswordWindow();
                 }
+
+                @Override
+                public void onPasswordNotSet(String message) {
+                    navigator.showDatabaseErrorDialog(message);
+                }
             };
 
             if (oldPasswordExistsMode) {
