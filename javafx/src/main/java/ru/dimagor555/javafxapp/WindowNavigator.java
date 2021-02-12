@@ -25,10 +25,12 @@ public class WindowNavigator implements Navigator {
             openWindow(WindowType.LOGIN);
         } else {
             Login login = config.login();
-            LoginPresenter presenter = new LoginPresenter(login, this);
+            HasMasterPassword hasMasterPassword = config.hasMasterPassword();
+            LoginPresenter presenter = new LoginPresenter(login, hasMasterPassword, this);
             Window loginWindow = new LoginWindow(presenter);
             loginWindow.getStage().setResizable(false);
             windows.put(loginWindow.getType(), loginWindow);
+            presenter.reset();
             loginWindow.open();
         }
     }
