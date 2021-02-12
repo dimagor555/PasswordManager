@@ -6,6 +6,7 @@ public class MasterPasswordPresenter {
     private final SetMasterPassword setMasterPassword;
     private final Navigator navigator;
     private boolean oldPasswordExistsMode;
+    private boolean setQueried = false;
     private View view;
 
     public MasterPasswordPresenter(SetMasterPassword setMasterPassword, Navigator navigator) {
@@ -27,6 +28,11 @@ public class MasterPasswordPresenter {
     }
 
     public void setMasterPassword() {
+        if (setQueried) {
+            return;
+        }
+        disable();
+
         hideAllErrors();
         String newPassword1 = view.getNewPassword1();
         String newPassword2 = view.getNewPassword2();
@@ -48,6 +54,7 @@ public class MasterPasswordPresenter {
                 @Override
                 public void onOldPasswordIncorrect() {
                     view.showOldPasswordIncorrectError();
+                    enable();
                 }
 
                 @Override
@@ -58,6 +65,7 @@ public class MasterPasswordPresenter {
                 @Override
                 public void onPasswordNotSet(String message) {
                     navigator.showDatabaseErrorDialog(message);
+                    enable();
                 }
             };
 
@@ -67,6 +75,8 @@ public class MasterPasswordPresenter {
             } else {
                 setMasterPassword.execute(newPassword1, callback);
             }
+        } else {
+            enable();
         }
     }
 
@@ -78,6 +88,16 @@ public class MasterPasswordPresenter {
         view.hideOldPasswordIncorrectError();
         view.hideNewPasswordLengthError();
         view.hideNewPasswordDoNotMatchesError();
+    }
+
+    private void disable() {
+        setQueried = true;
+        view.disableButtons();
+    }
+
+    private void enable() {
+        setQueried = false;
+        view.enableButtons();
     }
 
     public interface View {
@@ -102,5 +122,9 @@ public class MasterPasswordPresenter {
         String getNewPassword1();
 
         String getNewPassword2();
+
+        void disableButtons();
+
+        void enableButtons();
     }
 }
