@@ -1,26 +1,33 @@
 package ru.dimagor555.repository;
 
 import ru.dimagor555.domain.entity.Record;
+import ru.dimagor555.domain.port.Decryptor;
+import ru.dimagor555.domain.port.Encryptor;
 import ru.dimagor555.domain.port.RecordRepository;
 import ru.dimagor555.usecase.exception.DatabaseException;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public class CombinedRecordRepository implements RecordRepository {
     private final HashMapRecordRepository repository = new HashMapRecordRepository();
     private final RecordDao dao;
+    private final RecordCryptor recordCryptor;
 
     private boolean dbLoaded = false;
 
-    public CombinedRecordRepository(RecordDao dao) {
+    public CombinedRecordRepository(RecordDao dao, Encryptor encryptor, Decryptor decryptor) {
         this.dao = dao;
+        this.recordCryptor = new RecordCryptor(encryptor, decryptor);
     }
 
     @Override
     public void create(Record record) {
         try {
-            dao.create(record);
+            Record toCreateInDb = recordCryptor.encryptRecord(record);
+            dao.create(toCreateInDb);
             repository.create(record);
         } catch (Exception e) {
             throw new DatabaseException("Create: " + e.getMessage());
@@ -30,7 +37,8 @@ public class CombinedRecordRepository implements RecordRepository {
     @Override
     public Record update(Record record) {
         try {
-            dao.update(record);
+            Record toUpdateInDb = recordCryptor.encryptRecord(record);
+            dao.update(toUpdateInDb);
             return repository.update(record);
         } catch (Exception e) {
             throw new DatabaseException("Update: " + e.getMessage());
@@ -61,8 +69,11 @@ public class CombinedRecordRepository implements RecordRepository {
     public Collection<Record> getAll() {
         if (!dbLoaded) {
             try {
-                var records = dao.findAll();
-                records.forEach(repository::create);
+                var encryptedRecords = dao.findAll();
+                List<Record> decryptedRecords = new ArrayList<>(encryptedRecords.size());
+                encryptedRecords.forEach(record ->
+                        decryptedRecords.add(recordCryptor.decryptRecord(record)));
+                decryptedRecords.forEach(repository::create);
                 dbLoaded = true;
             } catch (Exception e) {
                 throw new DatabaseException("FindAll: " + e.getMessage());
