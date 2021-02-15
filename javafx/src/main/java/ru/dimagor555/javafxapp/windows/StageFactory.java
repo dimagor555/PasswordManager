@@ -4,23 +4,38 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class StageFactory {
+    private final CssLoader cssLoader = new CssLoader();
+
     public Stage createStage(WindowType type) {
         var loader = new PaneLoader();
         Stage stage = new Stage();
-        stage.setScene(new Scene(loader.loadPane(getPath(type))));
+        Scene scene = new Scene(loader.loadPane(getFxmlPath(type)));
+        setCss(scene, type);
+        stage.setScene(scene);
         stage.setTitle(getTitle(type));
         return stage;
     }
 
-    private String getPath(WindowType type) {
-        return "/" +  switch (type) {
+    private void setCss(Scene scene, WindowType type) {
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(cssLoader.getCommonCssPath());
+        var windowStyleSheet = cssLoader.getCssPath(getFileName(type));
+        windowStyleSheet.ifPresent(s -> scene.getStylesheets().add(s));
+    }
+
+    private String getFxmlPath(WindowType type) {
+        return "/fxml/" +  getFileName(type) + ".fxml";
+    }
+
+    private String getFileName(WindowType type) {
+        return switch (type) {
             case LOGIN -> "login";
             case MAIN -> "main";
             case CREATE -> "create";
             case UPDATE -> "update";
             case DELETE -> "delete";
             case MASTER_PASSWORD -> "masterpassword";
-        } + ".fxml";
+        };
     }
 
     private String getTitle(WindowType type) {

@@ -14,6 +14,7 @@ import java.util.HashMap;
 public class WindowNavigator implements Navigator {
     private final Config config;
     private final HashMap<WindowType, Window> windows = new HashMap<>(WindowType.values().length);
+    private final AlertFactory alertFactory = new AlertFactory();
 
     public WindowNavigator(Config config) {
         this.config = config;
@@ -172,26 +173,23 @@ public class WindowNavigator implements Navigator {
 
     @Override
     public void showRecordAlreadyExistsDialog() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText("Record for this site and login already exists");
+        Alert alert = alertFactory.createErrorAlert(
+                "Record for this site and login already exists");
         alert.showAndWait();
     }
 
     @Override
     public void showRecordNotFoundDialog() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText("Record not found");
+        Alert alert = alertFactory.createErrorAlert("Record not found");
         alert.showAndWait();
     }
 
     @Override
     public void showMasterPasswordNotFoundDialog() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Error");
-        alert.setHeaderText("Master password not found");
-        alert.setContentText("Do you want to set master password?");
+        Alert alert = alertFactory.createErrorAlert(
+                "Master password not found",
+                "Do you want to set master password?");
+        alert.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
 
         var result = alert.showAndWait();
         result.ifPresent(buttonType -> {
@@ -203,10 +201,7 @@ public class WindowNavigator implements Navigator {
 
     @Override
     public void showDatabaseErrorDialog(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText("Database error");
-        alert.setContentText(message);
+        Alert alert = alertFactory.createErrorAlert("Database error", message);
         alert.showAndWait();
     }
 
