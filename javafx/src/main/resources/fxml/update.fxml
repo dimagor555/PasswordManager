@@ -24,7 +24,7 @@
          <font>
             <Font size="15.0" />
          </font></TextField>
-      <Button fx:id="btnGeneratePassword" layoutX="379.0" layoutY="308.0" mnemonicParsing="false" text="Сгенерировать пароль" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="30.0">
+      <Button fx:id="btnGeneratePassword" layoutX="350.0" layoutY="248.0" maxWidth="220.0" minWidth="220.0" mnemonicParsing="false" prefWidth="220.0" text="Сгенерировать пароль" AnchorPane.bottomAnchor="84.0" AnchorPane.rightAnchor="30.0">
          <font>
             <Font size="15.0" />
          </font>
@@ -34,12 +34,12 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <CheckBox fx:id="checkBoxSpecialSymbols" layoutX="435.0" layoutY="278.0" mnemonicParsing="false" text="Спец символы" AnchorPane.bottomAnchor="140.0" AnchorPane.rightAnchor="30.0">
+      <CheckBox fx:id="checkBoxSpecialSymbols" layoutX="350.0" layoutY="208.0" maxWidth="220.0" minWidth="220.0" mnemonicParsing="false" prefWidth="220.0" text="Специальные символы" AnchorPane.bottomAnchor="134.0" AnchorPane.rightAnchor="30.0">
          <font>
             <Font size="15.0" />
          </font>
       </CheckBox>
-      <Label layoutX="360.0" layoutY="218.0" text="Длина Пароля:" AnchorPane.bottomAnchor="200.0" AnchorPane.rightAnchor="130.0">
+      <Label layoutX="350.0" layoutY="170.0" text="Длина пароля:" AnchorPane.bottomAnchor="172.0" AnchorPane.rightAnchor="140.0">
          <font>
             <Font size="15.0" />
          </font>
@@ -69,7 +69,7 @@
             <Font />
          </font>
       </Label>
-      <ChoiceBox fx:id="chBoxPasswordLen" layoutX="485.0" layoutY="139.0" prefHeight="28.0" prefWidth="91.0" AnchorPane.bottomAnchor="198.0" AnchorPane.rightAnchor="30.0" />
+      <ChoiceBox fx:id="chBoxPasswordLen" layoutX="479.0" layoutY="165.0" prefHeight="28.0" prefWidth="91.0" AnchorPane.bottomAnchor="170.0" AnchorPane.rightAnchor="30.0" />
       <Button fx:id="btnCancel" cancelButton="true" layoutX="379.0" layoutY="322.0" mnemonicParsing="false" text="Отмена" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="144.0">
          <font>
             <Font size="15.0" />

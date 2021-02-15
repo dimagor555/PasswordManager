@@ -6,7 +6,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 public class HibernateSessionFactoryUtil {
-    private static String DB_PATH = System.getProperty("user.home") + "/.PasswordManager/data/db";
+    private static final String DB_PATH = System.getProperty("user.home") + "/.PasswordManager/data/db";
     private static SessionFactory sessionFactory;
 
     private static SessionFactory getSessionFactory() {

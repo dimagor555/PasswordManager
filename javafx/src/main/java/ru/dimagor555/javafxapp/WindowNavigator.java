@@ -14,6 +14,7 @@ import java.util.HashMap;
 public class WindowNavigator implements Navigator {
     private final Config config;
     private final HashMap<WindowType, Window> windows = new HashMap<>(WindowType.values().length);
+    private final AlertFactory alertFactory = new AlertFactory();
 
     public WindowNavigator(Config config) {
         this.config = config;
@@ -25,10 +26,12 @@ public class WindowNavigator implements Navigator {
             openWindow(WindowType.LOGIN);
         } else {
             Login login = config.login();
-            LoginPresenter presenter = new LoginPresenter(login, this);
+            HasMasterPassword hasMasterPassword = config.hasMasterPassword();
+            LoginPresenter presenter = new LoginPresenter(login, hasMasterPassword, this);
             Window loginWindow = new LoginWindow(presenter);
             loginWindow.getStage().setResizable(false);
             windows.put(loginWindow.getType(), loginWindow);
+            presenter.reset();
             loginWindow.open();
         }
     }
@@ -77,8 +80,10 @@ public class WindowNavigator implements Navigator {
             createWindow.open();
         } else {
             CreateRecord createRecord = config.createRecord();
+            EncryptPassword encryptPassword = config.encryptPassword();
             PasswordGeneratorFactory passGenFactory = config.getPassGenFactory();
-            CreatePresenter presenter = new CreatePresenter(createRecord, passGenFactory, this);
+            CreatePresenter presenter = new CreatePresenter(
+                    createRecord, encryptPassword, passGenFactory, this);
             Window createWindow = new CreateWindow(presenter);
             windows.put(createWindow.getType(), createWindow);
             setOwnerForWindow(WindowType.MAIN, WindowType.CREATE);
@@ -101,8 +106,11 @@ public class WindowNavigator implements Navigator {
             updateWindow.open();
         } else {
             UpdateRecord updateRecord = config.updateRecord();
+            EncryptPassword encryptPassword = config.encryptPassword();
+            DecryptPassword decryptPassword = config.decryptPassword();
             PasswordGeneratorFactory passGenFactory = config.getPassGenFactory();
-            UpdatePresenter presenter = new UpdatePresenter(updateRecord, passGenFactory, this);
+            UpdatePresenter presenter = new UpdatePresenter(updateRecord, encryptPassword,
+                    decryptPassword, passGenFactory, this);
             Window updateWindow = new UpdateWindow(presenter);
             windows.put(updateWindow.getType(), updateWindow);
             setOwnerForWindow(WindowType.MAIN, WindowType.UPDATE);
@@ -165,26 +173,23 @@ public class WindowNavigator implements Navigator {
 
     @Override
     public void showRecordAlreadyExistsDialog() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText("Record for this site and login already exists");
+        Alert alert = alertFactory.createErrorAlert(
+                "Record for this site and login already exists");
         alert.showAndWait();
     }
 
     @Override
     public void showRecordNotFoundDialog() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText("Record not found");
+        Alert alert = alertFactory.createErrorAlert("Record not found");
         alert.showAndWait();
     }
 
     @Override
     public void showMasterPasswordNotFoundDialog() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Error");
-        alert.setHeaderText("Master password not found");
-        alert.setContentText("Do you want to set master password?");
+        Alert alert = alertFactory.createErrorAlert(
+                "Master password not found",
+                "Do you want to set master password?");
+        alert.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
 
         var result = alert.showAndWait();
         result.ifPresent(buttonType -> {
@@ -196,10 +201,7 @@ public class WindowNavigator implements Navigator {
 
     @Override
     public void showDatabaseErrorDialog(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText("Database error");
-        alert.setContentText(message);
+        Alert alert = alertFactory.createErrorAlert("Database error", message);
         alert.showAndWait();
     }
 

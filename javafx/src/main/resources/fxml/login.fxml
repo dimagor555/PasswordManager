@@ -15,7 +15,7 @@
          <font>
             <Font size="17.0" />
          </font></PasswordField>
-      <Label fx:id="labelError" alignment="CENTER" layoutX="101.0" layoutY="112.0" text="Неверный пароль" textFill="RED" visible="false" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+      <Label fx:id="labelError" alignment="CENTER" layoutX="101.0" layoutY="112.0" text="Неверный пароль" visible="false" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
          <font>
             <Font size="14.0" />
          </font></Label>

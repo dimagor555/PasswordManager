@@ -9,6 +9,12 @@ import ru.dimagor555.presentation.MasterPasswordPresenter;
 
 public class MasterPasswordView implements MasterPasswordPresenter.View {
     @FXML
+    private Button btnSet;
+
+    @FXML
+    private Button btnCancel;
+
+    @FXML
     private Label lblOldPassword;
     
     @FXML
@@ -47,8 +53,8 @@ public class MasterPasswordView implements MasterPasswordPresenter.View {
         lblPasswordLengthError = (Label) root.lookup("#lblPasswordLengthError");
         lblPasswordNotMatchError = (Label) root.lookup("#lblPasswordNotMatchError");
 
-        Button btnSet = (Button) root.lookup("#btnSet");
-        Button btnCancel = (Button) root.lookup("#btnCancel");
+        btnSet = (Button) root.lookup("#btnSet");
+        btnCancel = (Button) root.lookup("#btnCancel");
         btnSet.setOnAction(event -> onSetBtnClicked());
         btnCancel.setOnAction(event -> onCancelBtnClicked());
     }
@@ -116,5 +122,17 @@ public class MasterPasswordView implements MasterPasswordPresenter.View {
     @Override
     public String getNewPassword2() {
         return fieldNewPassword2.getText();
+    }
+
+    @Override
+    public void disableButtons() {
+        btnSet.setDisable(true);
+        btnCancel.setDisable(true);
+    }
+
+    @Override
+    public void enableButtons() {
+        btnSet.setDisable(false);
+        btnCancel.setDisable(false);
     }
 }

@@ -1,0 +1,134 @@
+.root, .dialog-pane:header .header-panel {
+    -fx-background-color: #121212;
+}
+
+.label {
+    -fx-text-fill: #FFF;
+    -fx-opacity: 0.79;
+}
+
+.button {
+    -fx-text-fill: #000;
+
+    -fx-background-color: #FAC980;
+    -fx-background-insets: 0;
+    -fx-background-radius: 10;
+
+    -fx-border-color: #FAC980;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+}
+
+.button:focused {
+     -fx-background-color: #FBD69D;
+     -fx-border-color: #FFF;
+}
+
+.button:hover {
+     -fx-background-color: #FCDEB2;
+     -fx-border-color: #FCDEB2;
+}
+
+.button:pressed {
+    -fx-background-color: #F8B34C;
+    -fx-border-color: #F8B34C;
+}
+
+.button:armed {
+    -fx-background-color: #F8B34C;
+    -fx-border-color: #F8B34C;
+}
+
+.button:disabled {
+    -fx-background-color: #484848;
+    -fx-border-color: #484848;
+    -fx-text-fill: #7A7A7A;
+}
+
+.text-field {
+    -fx-text-fill: #D2D2D2;
+
+    -fx-background-color: #292929;
+    -fx-background-insets: 0;
+    -fx-background-radius: 10;
+
+    -fx-highlight-fill: #6181E5;
+}
+
+.text-field:hover {
+     -fx-background-color: #393939;
+}
+
+.text-area,
+.text-area .content,
+.text-area .scroll-pane,
+.text-area .viewport {
+    -fx-text-fill: #D2D2D2;
+
+    -fx-background-color: #292929;
+    -fx-background-insets: 0;
+    -fx-background-radius: 10;
+
+    -fx-highlight-fill: #6181E5;
+}
+
+.text-area .scroll-pane .corner,
+.text-area .scroll-bar,
+.text-area .scroll-bar .track,
+.text-area .scroll-bar .thumb,
+.text-area .scroll-bar .increment-button,
+.text-area .scroll-bar .decrement-button,
+.text-area .scroll-bar .increment-button .increment-arrow,
+.text-area .scroll-bar .decrement-button .decrement-arrow{
+    -fx-background-color: transparent;
+}
+
+.text-area:hover,
+.text-area:hover .content,
+.text-area:hover .scroll-pane,
+.text-area:hover .viewport {
+     -fx-background-color: #393939;
+}
+
+/*check box*/
+
+.check-box .text {
+    -fx-fill: #fff;
+    -fx-opacity: 0.79;
+}
+
+.check-box .box {
+    -fx-background-color: #292929;
+    -fx-border-color: #292929;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #fff;
+    -fx-opacity: 0.79;
+}
+
+/*choice box*/
+
+.choice-box,
+.choice-box:focused {
+  -fx-background-color: #292929;
+  -fx-mark-color: #fff;
+}
+
+.choice-box .label {
+    -fx-text-color: #fff;
+    -fx-opacity: 0.79;
+}
+
+.choice-box .context-menu {
+    -fx-background-color: #333;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: #3A3A3A;
+}
+
+.choice-box .arrow {
+    -fx-background-color: #fff;
+    -fx-opacity: 0.79;
+}

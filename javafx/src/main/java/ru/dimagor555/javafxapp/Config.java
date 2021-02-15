@@ -1,29 +1,33 @@
 package ru.dimagor555.javafxapp;
 
 import ru.dimagor555.cryption.AesCryptor;
+import ru.dimagor555.cryption.AesCryptorAutoSetKey;
 import ru.dimagor555.dbdao.RecordHibernateDao;
-import ru.dimagor555.domain.entity.MasterPassword;
 import ru.dimagor555.domain.port.*;
-import ru.dimagor555.hasher.DefaultHasher;
+import ru.dimagor555.hasher.BCryptHasher;
 import ru.dimagor555.idgenerator.SequenceIdGenerator;
 import ru.dimagor555.passwordgenerator.PasswordGeneratorFactory;
+import ru.dimagor555.repository.CombinedMasterPasswordRepository;
 import ru.dimagor555.repository.CombinedRecordRepository;
-import ru.dimagor555.repository.InMemoryMasterPasswordRepository;
 import ru.dimagor555.usecase.*;
 
 import java.util.concurrent.Executor;
 
 public class Config {
-    private final RecordHibernateDao recordDao = new RecordHibernateDao();
-    private final RecordRepository recordRepository = new CombinedRecordRepository(recordDao);
     private final MasterPasswordRepository masterPasswordRepository =
-            new InMemoryMasterPasswordRepository();
-    private final PasswordGeneratorFactory passGenFactory = new PasswordGeneratorFactory();
-    private final IdGenerator idGenerator = new SequenceIdGenerator(recordRepository);
-    private final AesCryptor aesCryptor = new AesCryptor();
+            new CombinedMasterPasswordRepository();
+
+    private final AesCryptor aesCryptor = new AesCryptorAutoSetKey(
+            new GetCryptKeyInteractor(masterPasswordRepository));
     private final Encryptor encryptor = aesCryptor;
     private final Decryptor decryptor = aesCryptor;
-    private final Hasher hasher = new DefaultHasher();
+    private final Hasher hasher = new BCryptHasher();
+
+    private final RecordHibernateDao recordDao = new RecordHibernateDao();
+    private final RecordRepository recordRepository
+            = new CombinedRecordRepository(recordDao, encryptor, decryptor);
+    private final PasswordGeneratorFactory passGenFactory = new PasswordGeneratorFactory();
+    private final IdGenerator idGenerator = new SequenceIdGenerator(recordRepository);
 
     private final Executor mainExecutor = new MultiThreadMainExecutor();
     private final Executor postExecutor = new FxThreadPostExecutor();
@@ -53,8 +57,13 @@ public class Config {
     }
 
     public Login login() {
-        masterPasswordRepository.set(new MasterPassword(hasher.hash("test")));
         var interactor = new LoginInteractor(masterPasswordRepository, hasher);
+        interactor.buildInteractor(mainExecutor, postExecutor);
+        return interactor;
+    }
+
+    public HasMasterPassword hasMasterPassword() {
+        var interactor = new HasMasterPasswordInteractor(masterPasswordRepository);
         interactor.buildInteractor(mainExecutor, postExecutor);
         return interactor;
     }
@@ -65,15 +74,19 @@ public class Config {
         return interactor;
     }
 
+    public EncryptPassword encryptPassword() {
+        var interactor = new EncryptPasswordInteractor(encryptor);
+        interactor.buildInteractor(mainExecutor, postExecutor);
+        return interactor;
+    }
+
+    public DecryptPassword decryptPassword() {
+        var interactor = new DecryptPasswordInteractor(decryptor);
+        interactor.buildInteractor(mainExecutor, postExecutor);
+        return interactor;
+    }
+
     public PasswordGeneratorFactory getPassGenFactory() {
         return passGenFactory;
-    }
-
-    public Encryptor getEncryptor() {
-        return encryptor;
-    }
-
-    public Decryptor getDecryptor() {
-        return decryptor;
     }
 }

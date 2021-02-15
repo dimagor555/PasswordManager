@@ -19,6 +19,7 @@ dependencies {
 
     implementation(project(':domain'))
     implementation(project(':usecase'))
+    implementation(project(':adapter:cryption'))
 }
 
 test {

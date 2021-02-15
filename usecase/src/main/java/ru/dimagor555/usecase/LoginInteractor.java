@@ -17,9 +17,11 @@ public class LoginInteractor extends Interactor implements Login {
         executeMain(() -> {
             var masterPassword = masterPasswordRepository.get();
             if (masterPassword.isPresent()) {
-                String passwordHash = hasher.hash(password);
-                boolean correctPassword = masterPassword.get().isPasswordHashCorrect(passwordHash);
+                var masterPass = masterPassword.get();
+                String passwordHash = hasher.hashPassword(password, masterPass.getSalt());
+                boolean correctPassword = masterPass.isPasswordHashCorrect(passwordHash);
                 if (correctPassword) {
+                    masterPass.setCryptKey(hasher.hashCryptKey(password, masterPass.getSalt()));
                     executePost(callback::onSuccessfulLogin);
                 } else {
                     executePost(callback::onIncorrectPassword);

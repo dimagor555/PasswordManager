@@ -18,6 +18,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 
     implementation(project(':domain'))
+    implementation(project(':usecase'))
 }
 
 test {
