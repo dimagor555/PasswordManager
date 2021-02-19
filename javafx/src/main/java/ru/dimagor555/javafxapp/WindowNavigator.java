@@ -189,7 +189,7 @@ public class WindowNavigator implements Navigator {
         Alert alert = alertFactory.createErrorAlert(
                 "Master password not found",
                 "Do you want to set master password?");
-        alert.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
+        alert.getButtonTypes().addAll(ButtonType.CANCEL);
 
         var result = alert.showAndWait();
         result.ifPresent(buttonType -> {
