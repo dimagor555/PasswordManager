@@ -33,6 +33,7 @@ dependencies {
     implementation(project(':adapter:hasher'))
     implementation(project(':adapter:db-dao'))
     implementation(project(':adapter:cryption'))
+    implementation(project(':adapter:clipboard'))
 }
 
 test {

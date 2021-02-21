@@ -1,5 +1,6 @@
 package ru.dimagor555.javafxapp;
 
+import ru.dimagor555.clipboard.JavafxClipboard;
 import ru.dimagor555.cryption.AesCryptor;
 import ru.dimagor555.cryption.AesCryptorAutoSetKey;
 import ru.dimagor555.dbdao.RecordHibernateDao;
@@ -28,6 +29,7 @@ public class Config {
             = new CombinedRecordRepository(recordDao, encryptor, decryptor);
     private final PasswordGeneratorFactory passGenFactory = new PasswordGeneratorFactory();
     private final IdGenerator idGenerator = new SequenceIdGenerator(recordRepository);
+    private final Clipboard clipboard = new JavafxClipboard();
 
     private final Executor mainExecutor = new MultiThreadMainExecutor();
     private final Executor postExecutor = new FxThreadPostExecutor();
@@ -83,6 +85,12 @@ public class Config {
     public DecryptPassword decryptPassword() {
         var interactor = new DecryptPasswordInteractor(decryptor);
         interactor.buildInteractor(mainExecutor, postExecutor);
+        return interactor;
+    }
+
+    public PutInClipboard putInClipboard() {
+        var interactor = new PutInClipboardInteractor(clipboard);
+        interactor.buildInteractor(postExecutor, postExecutor);
         return interactor;
     }
 

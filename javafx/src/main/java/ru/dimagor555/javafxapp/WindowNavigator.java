@@ -49,7 +49,9 @@ public class WindowNavigator implements Navigator {
             openWindow(WindowType.MAIN);
         } else {
             GetAllRecords getAllRecords = config.getAllRecords();
-            MainPresenter presenter = new MainPresenter(getAllRecords, this);
+            DecryptPassword decryptPassword = config.decryptPassword();
+            PutInClipboard putInClipboard = config.putInClipboard();
+            MainPresenter presenter = new MainPresenter(getAllRecords, decryptPassword, putInClipboard, this);
             Window mainWindow = new MainWindow(presenter);
             windows.put(mainWindow.getType(), mainWindow);
             presenter.update();

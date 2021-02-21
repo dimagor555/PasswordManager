@@ -9,6 +9,7 @@ include 'adapter:id-generator'
 include 'adapter:hasher'
 include 'adapter:db-dao'
 include 'adapter:cryption'
+include 'adapter:clipboard'
 
 findProject(':adapter:repository')?.name = 'repository'
 findProject(':adapter:password-generator')?.name = 'password-generator'
@@ -16,4 +17,5 @@ findProject(':adapter:id-generator')?.name = 'id-generator'
 findProject(':adapter:hasher')?.name = 'hasher'
 findProject(':adapter:db-dao')?.name = 'db-dao'
 findProject(':adapter:cryption')?.name = 'cryption'
+findProject(':adapter:clipboard')?.name = 'clipboard'
 
