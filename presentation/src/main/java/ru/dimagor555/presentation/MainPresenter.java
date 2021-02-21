@@ -6,6 +6,8 @@ import ru.dimagor555.usecase.GetAllRecords;
 import ru.dimagor555.usecase.PutInClipboard;
 
 import java.util.List;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class MainPresenter {
     private final GetAllRecords getAllRecords;
@@ -61,6 +63,33 @@ public class MainPresenter {
 
     public void copyPassword(String encryptedPassword) {
         decryptPassword.execute(encryptedPassword, putInClipboard::execute);
+    }
+
+    public void filterRecords(String value) {
+        Pattern pattern = Pattern.compile(value, Pattern.CASE_INSENSITIVE + Pattern.LITERAL);
+
+        class Filter {
+            boolean contains(String value) {
+                return pattern.matcher(value).find();
+            }
+        }
+
+        getAllRecords.execute(new GetAllRecords.Callback() {
+            @Override
+            public void onAllRecordsLoaded(List<Record> allRecords) {
+                Filter filter = new Filter();
+                List<Record> filteredRecords = allRecords.stream()
+                        .filter(record -> filter.contains(record.getSite())
+                        || filter.contains(record.getLogin()))
+                        .collect(Collectors.toList());
+                view.renderRecords(filteredRecords);
+            }
+
+            @Override
+            public void onDatabaseError(String message) {
+                navigator.showDatabaseErrorDialog(message);
+            }
+        });
     }
 
     public interface View {

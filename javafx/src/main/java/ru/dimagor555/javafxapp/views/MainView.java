@@ -25,6 +25,9 @@ public class MainView implements MainPresenter.View {
     private Button btnDelete;
 
     @FXML
+    private TextField fieldSearch;
+
+    @FXML
     private TableView<Record> tableRecords;
 
     private MainPresenter presenter;
@@ -40,11 +43,14 @@ public class MainView implements MainPresenter.View {
         btnUpdate = (Button) root.lookup("#btnUpdate");
         btnCreate = (Button) root.lookup("#btnCreate");
         btnDelete = (Button) root.lookup("#btnDelete");
+        fieldSearch = (TextField) root.lookup("#fieldSearch");
         tableRecords = (TableView<Record>) root.lookup("#tableRecords");
 
         btnUpdate.setOnAction(event -> onUpdateBtnClicked());
         btnCreate.setOnAction(event -> onCreateBtnClicked());
         btnDelete.setOnAction(event -> onDeleteBtnClicked());
+        fieldSearch.textProperty().addListener((observable, oldValue, newValue) ->
+                presenter.filterRecords(newValue));
 
         for (TableColumn column : tableRecords.getColumns()) {
             column.setSortable(false);
