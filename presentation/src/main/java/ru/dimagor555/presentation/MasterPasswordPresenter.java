@@ -19,6 +19,7 @@ public class MasterPasswordPresenter {
     }
 
     public void reset(boolean oldPasswordExists) {
+        enable();
         oldPasswordExistsMode = oldPasswordExists;
         if (oldPasswordExistsMode) {
             view.showOldPasswordField();
