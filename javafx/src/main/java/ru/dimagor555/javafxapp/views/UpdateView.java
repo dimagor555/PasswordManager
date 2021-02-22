@@ -156,4 +156,16 @@ public class UpdateView implements UpdatePresenter.View {
     public boolean isSpecialSymbolsSelected() {
         return checkBoxSpecialSymbols.isSelected();
     }
+
+    @Override
+    public void disableButtons() {
+        btnUpdate.setDisable(true);
+        btnCancel.setDisable(true);
+    }
+
+    @Override
+    public void enableButtons() {
+        btnUpdate.setDisable(false);
+        btnCancel.setDisable(false);
+    }
 }

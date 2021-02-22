@@ -24,4 +24,8 @@ public interface CreateUpdateView {
     int getPasswordLength();
 
     boolean isSpecialSymbolsSelected();
+
+    void disableButtons();
+
+    void enableButtons();
 }

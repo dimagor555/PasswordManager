@@ -152,4 +152,16 @@ public class CreateView implements CreatePresenter.View {
     public boolean isSpecialSymbolsSelected() {
         return checkBoxSpecialSymbols.isSelected();
     }
+
+    @Override
+    public void disableButtons() {
+        btnCreate.setDisable(true);
+        btnCancel.setDisable(true);
+    }
+
+    @Override
+    public void enableButtons() {
+        btnCreate.setDisable(false);
+        btnCancel.setDisable(false);
+    }
 }

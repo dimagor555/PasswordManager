@@ -26,6 +26,7 @@ public class CreatePresenter extends CreateUpdatePresenter {
     }
 
     public void reset() {
+        enable();
         view.hideSiteError();
         view.hideLoginError();
         view.hidePasswordError();
@@ -33,6 +34,9 @@ public class CreatePresenter extends CreateUpdatePresenter {
     }
 
     public void createRecord() {
+        if (operationQueried) {
+            return;
+        }
         if (this.validateRecord()) {
             String site = view.getSite();
             String login = view.getLogin();
@@ -44,6 +48,7 @@ public class CreatePresenter extends CreateUpdatePresenter {
     }
 
     private void executeCreateRecord(String site, String login, String encryptedPassword) {
+        disable();
         RecordCreationModel toCreate = new RecordCreationModel(site, login, encryptedPassword);
         createRecord.execute(toCreate, new CreateRecord.Callback() {
             @Override
@@ -55,11 +60,13 @@ public class CreatePresenter extends CreateUpdatePresenter {
             @Override
             public void onRecordAlreadyExistError() {
                 navigator.showRecordAlreadyExistsDialog();
+                enable();
             }
 
             @Override
             public void onDatabaseError(String message) {
                 navigator.showDatabaseErrorDialog(message);
+                enable();
             }
         });
     }

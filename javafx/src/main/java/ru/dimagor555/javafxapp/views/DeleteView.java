@@ -50,4 +50,16 @@ public class DeleteView implements DeletePresenter.View {
     public void setFocusOnCancelBtn() {
         btnCancel.requestFocus();
     }
+
+    @Override
+    public void disableButtons() {
+        btnCancel.setDisable(true);
+        btnAccept.setDisable(true);
+    }
+
+    @Override
+    public void enableButtons() {
+        btnCancel.setDisable(false);
+        btnAccept.setDisable(false);
+    }
 }

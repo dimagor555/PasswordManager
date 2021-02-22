@@ -9,6 +9,7 @@ public class CreateUpdatePresenter {
     private final GeneratePassword genAlphanumPass;
     private final GeneratePassword genSpecSymPass;
     protected final Navigator navigator;
+    protected boolean operationQueried = false;
     private CreateUpdateView view;
 
     public CreateUpdatePresenter(PasswordGeneratorFactory passGenFactory, Navigator navigator) {
@@ -64,5 +65,15 @@ public class CreateUpdatePresenter {
         }
 
         return !hasErrors;
+    }
+
+    protected void disable() {
+        operationQueried = true;
+        view.disableButtons();
+    }
+
+    protected void enable() {
+        operationQueried = false;
+        view.enableButtons();
     }
 }
