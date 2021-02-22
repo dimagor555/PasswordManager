@@ -10,10 +10,14 @@ import java.util.Optional;
 public class SetMasterPasswordInteractor extends Interactor implements SetMasterPassword {
     private final MasterPasswordRepository masterPasswordRepository;
     private final Hasher hasher;
+    private final ReEncryptAllRecords reEncryptAllRecords;
 
-    public SetMasterPasswordInteractor(MasterPasswordRepository masterPasswordRepository, Hasher hasher) {
+    public SetMasterPasswordInteractor(MasterPasswordRepository masterPasswordRepository,
+                                       Hasher hasher,
+                                       ReEncryptAllRecords reEncryptAllRecords) {
         this.masterPasswordRepository = masterPasswordRepository;
         this.hasher = hasher;
+        this.reEncryptAllRecords = reEncryptAllRecords;
     }
 
     @Override
@@ -28,7 +32,21 @@ public class SetMasterPasswordInteractor extends Interactor implements SetMaster
                     String oldPasswordHash = hasher.hashPassword(oldPassword, salt);
                     boolean correctPassword = password.isPasswordHashCorrect(oldPasswordHash);
                     if (correctPassword) {
-                        setNewMasterPassword(newPassword, callback);
+                        String newSalt = hasher.genSalt();
+                        String newCryptKey = hasher.hashCryptKey(newPassword, newSalt);
+                        reEncryptAllRecords.execute(newCryptKey,
+                                new ReEncryptAllRecords.Callback() {
+                            @Override
+                            public void onAllRecordsReEncrypted() {
+                                setNewMasterPassword(newPassword, newSalt, callback);
+                            }
+
+                            @Override
+                            public void onReEncryptionError(String message) {
+                                executePost(() -> callback.onPasswordNotSet("Password not set:\n" +
+                                        "Error during re-encrypting all records:\n" + message));
+                            }
+                        });
                     } else {
                         executePost(callback::onOldPasswordIncorrect);
                     }
@@ -44,8 +62,7 @@ public class SetMasterPasswordInteractor extends Interactor implements SetMaster
         execute(null, newPassword, callback);
     }
 
-    private void setNewMasterPassword(String newPassword, Callback callback) {
-        String salt = hasher.genSalt();
+    private void setNewMasterPassword(String newPassword, String salt, Callback callback) {
         String cryptKey = hasher.hashCryptKey(newPassword, salt);
         String passwordHash = hasher.hashPassword(newPassword, salt);
         try {
@@ -54,5 +71,10 @@ public class SetMasterPasswordInteractor extends Interactor implements SetMaster
         } catch (DatabaseException e) {
             executePost(() -> callback.onPasswordNotSet("Password not set:\n" + e.getMessage()));
         }
+    }
+
+    private void setNewMasterPassword(String newPassword, Callback callback) {
+        String salt = hasher.genSalt();
+        setNewMasterPassword(newPassword, salt, callback);
     }
 }

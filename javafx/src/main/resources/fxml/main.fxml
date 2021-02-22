@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.dimagor555.javafxapp.views.MainView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.dimagor555.javafxapp.views.MainView">
    <children>
-      <TableView fx:id="tableRecords" layoutX="28.0" layoutY="25.0" prefHeight="350.0" prefWidth="420.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="125.0">
+      <TableView fx:id="tableRecords" layoutX="28.0" layoutY="25.0" prefHeight="350.0" prefWidth="420.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="125.0">
         <columns>
           <TableColumn prefWidth="140.0" text="Site" />
           <TableColumn prefWidth="140.0" text="Login" />
@@ -54,5 +54,10 @@
             </GridPane>
          </children>
       </VBox>
+      <Button fx:id="btnChangeMasterPassword" layoutX="500.0" layoutY="488.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="180.0" text="Change master password" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="25.0">
+         <font>
+            <Font size="12.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

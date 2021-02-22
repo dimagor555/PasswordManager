@@ -25,6 +25,9 @@ public class MainView implements MainPresenter.View {
     private Button btnDelete;
 
     @FXML
+    private Button btnChangeMasterPassword;
+
+    @FXML
     private TextField fieldSearch;
 
     @FXML
@@ -43,12 +46,14 @@ public class MainView implements MainPresenter.View {
         btnUpdate = (Button) root.lookup("#btnUpdate");
         btnCreate = (Button) root.lookup("#btnCreate");
         btnDelete = (Button) root.lookup("#btnDelete");
+        btnChangeMasterPassword = (Button) root.lookup("#btnChangeMasterPassword");
         fieldSearch = (TextField) root.lookup("#fieldSearch");
         tableRecords = (TableView<Record>) root.lookup("#tableRecords");
 
         btnUpdate.setOnAction(event -> onUpdateBtnClicked());
         btnCreate.setOnAction(event -> onCreateBtnClicked());
         btnDelete.setOnAction(event -> onDeleteBtnClicked());
+        btnChangeMasterPassword.setOnAction(event -> onChangeMasterPasswordBtnClicked());
         fieldSearch.textProperty().addListener((observable, oldValue, newValue) ->
                 presenter.filterRecords(newValue));
 
@@ -131,6 +136,10 @@ public class MainView implements MainPresenter.View {
 
     private void onDeleteBtnClicked() {
         presenter.deleteSelectedRecord();
+    }
+
+    private void onChangeMasterPasswordBtnClicked() {
+        presenter.changeMasterPassword();
     }
 
     @Override

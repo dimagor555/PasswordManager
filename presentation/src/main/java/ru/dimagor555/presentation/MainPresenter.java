@@ -92,6 +92,10 @@ public class MainPresenter {
         });
     }
 
+    public void changeMasterPassword() {
+        navigator.openMasterPasswordWindow(true);
+    }
+
     public interface View {
         Record getSelected();
 

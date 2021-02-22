@@ -1,7 +1,6 @@
 package ru.dimagor555.javafxapp;
 
 import ru.dimagor555.clipboard.JavafxClipboard;
-import ru.dimagor555.cryption.AesCryptor;
 import ru.dimagor555.cryption.AesCryptorAutoSetKey;
 import ru.dimagor555.dbdao.RecordHibernateDao;
 import ru.dimagor555.domain.port.*;
@@ -10,6 +9,7 @@ import ru.dimagor555.idgenerator.SequenceIdGenerator;
 import ru.dimagor555.passwordgenerator.PasswordGeneratorFactory;
 import ru.dimagor555.repository.CombinedMasterPasswordRepository;
 import ru.dimagor555.repository.CombinedRecordRepository;
+import ru.dimagor555.repository.HashMapRecordRepository;
 import ru.dimagor555.usecase.*;
 
 import java.util.concurrent.Executor;
@@ -18,10 +18,8 @@ public class Config {
     private final MasterPasswordRepository masterPasswordRepository =
             new CombinedMasterPasswordRepository();
 
-    private final AesCryptor aesCryptor = new AesCryptorAutoSetKey(
-            new GetCryptKeyInteractor(masterPasswordRepository));
-    private final Encryptor encryptor = aesCryptor;
-    private final Decryptor decryptor = aesCryptor;
+    private final Encryptor encryptor = new AesCryptorAutoSetKey(getCryptKey());
+    private final Decryptor decryptor = new AesCryptorAutoSetKey(getCryptKey());
     private final Hasher hasher = new BCryptHasher();
 
     private final RecordHibernateDao recordDao = new RecordHibernateDao();
@@ -71,7 +69,8 @@ public class Config {
     }
 
     public SetMasterPassword setMasterPassword() {
-        var interactor = new SetMasterPasswordInteractor(masterPasswordRepository, hasher);
+        var interactor = new SetMasterPasswordInteractor(masterPasswordRepository, hasher,
+                reEncryptAllRecords());
         interactor.buildInteractor(mainExecutor, postExecutor);
         return interactor;
     }
@@ -92,6 +91,17 @@ public class Config {
         var interactor = new PutInClipboardInteractor(clipboard);
         interactor.buildInteractor(postExecutor, postExecutor);
         return interactor;
+    }
+
+    private ReEncryptAllRecords reEncryptAllRecords() {
+        var interactor = new ReEncryptAllRecordsInteractor(recordRepository,
+                new HashMapRecordRepository(), masterPasswordRepository, decryptor, encryptor);
+        interactor.buildInteractor(mainExecutor, mainExecutor);
+        return interactor;
+    }
+
+    private GetCryptKey getCryptKey() {
+        return new GetCryptKeyInteractor(masterPasswordRepository);
     }
 
     public PasswordGeneratorFactory getPassGenFactory() {
