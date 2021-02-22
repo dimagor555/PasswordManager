@@ -7,6 +7,7 @@ import ru.dimagor555.domain.port.Encryptor;
 import ru.dimagor555.domain.port.MasterPasswordRepository;
 import ru.dimagor555.usecase.exception.DatabaseException;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -45,8 +46,13 @@ public class FileMasterPasswordRepository implements MasterPasswordRepository {
         try {
             String toWrite = masterPassword.getPasswordHash() + "\n" + masterPassword.getSalt();
             String toWriteEncrypted = encryptor.encrypt(toWrite);
-            Files.writeString(Paths.get(FILE_PATH), toWriteEncrypted, StandardOpenOption.WRITE,
-                    StandardOpenOption.CREATE);
+            File file = new File(FILE_PATH);
+            if (!file.exists()) {
+                file.getParentFile().mkdirs();
+                file.createNewFile();
+            }
+            Files.writeString(Paths.get(FILE_PATH), toWriteEncrypted, StandardOpenOption.CREATE,
+                    StandardOpenOption.WRITE);
         } catch (IOException e) {
             throw new DatabaseException(e.getMessage());
         }

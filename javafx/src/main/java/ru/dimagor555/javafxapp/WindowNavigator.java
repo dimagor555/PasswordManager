@@ -49,7 +49,9 @@ public class WindowNavigator implements Navigator {
             openWindow(WindowType.MAIN);
         } else {
             GetAllRecords getAllRecords = config.getAllRecords();
-            MainPresenter presenter = new MainPresenter(getAllRecords, this);
+            DecryptPassword decryptPassword = config.decryptPassword();
+            PutInClipboard putInClipboard = config.putInClipboard();
+            MainPresenter presenter = new MainPresenter(getAllRecords, decryptPassword, putInClipboard, this);
             Window mainWindow = new MainWindow(presenter);
             windows.put(mainWindow.getType(), mainWindow);
             presenter.update();
@@ -189,7 +191,7 @@ public class WindowNavigator implements Navigator {
         Alert alert = alertFactory.createErrorAlert(
                 "Master password not found",
                 "Do you want to set master password?");
-        alert.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
+        alert.getButtonTypes().addAll(ButtonType.CANCEL);
 
         var result = alert.showAndWait();
         result.ifPresent(buttonType -> {

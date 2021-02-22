@@ -1,31 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.dimagor555.javafxapp.views.MainView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.dimagor555.javafxapp.views.MainView">
    <children>
-      <TableView fx:id="tableRecords" layoutX="28.0" layoutY="25.0" prefHeight="350.0" prefWidth="420.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="25.0">
+      <TableView fx:id="tableRecords" layoutX="28.0" layoutY="25.0" prefHeight="350.0" prefWidth="420.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="125.0">
         <columns>
-          <TableColumn prefWidth="140.0" text="Сайт" />
-          <TableColumn prefWidth="140.0" text="Логин/Email" />
-            <TableColumn prefWidth="174.0" text="Пароль" />
+          <TableColumn prefWidth="140.0" text="Site" />
+          <TableColumn prefWidth="140.0" text="Login" />
+            <TableColumn prefWidth="174.0" text="Password" />
         </columns>
       </TableView>
-      <Button fx:id="btnUpdate" layoutX="482.0" layoutY="25.0" mnemonicParsing="false" text="Update" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
+      <VBox layoutX="263.0" layoutY="-9.0" prefHeight="100.0" prefWidth="100.0" spacing="20.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
+         <children>
+            <TextField fx:id="fieldSearch" promptText="Search">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </TextField>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="275.0" spacing="25.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <children>
+                        <Button fx:id="btnCreate" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="75.0" text="Create">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnUpdate" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="75.0" text="Update">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnDelete" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="75.0" text="Delete">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                     </children></HBox>
+               </children>
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </VBox.margin>
+            </GridPane>
+         </children>
+      </VBox>
+      <Button fx:id="btnChangeMasterPassword" layoutX="500.0" layoutY="488.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="180.0" text="Change master password" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="25.0">
          <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnCreate" layoutX="485.0" layoutY="80.0" mnemonicParsing="false" text="Create" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="80.0">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnDelete" layoutX="485.0" layoutY="135.0" mnemonicParsing="false" text="Delete" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="135.0">
-         <font>
-            <Font size="15.0" />
+            <Font size="12.0" />
          </font>
       </Button>
    </children>
