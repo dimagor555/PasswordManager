@@ -54,7 +54,7 @@
             <Font />
          </font>
       </Label>
-      <Button fx:id="btnUpdate" defaultButton="true" layoutX="260.0" layoutY="394.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="80.0" text="Create" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="30.0">
+      <Button fx:id="btnUpdate" defaultButton="true" layoutX="260.0" layoutY="394.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="80.0" text="Update" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="30.0">
          <font>
             <Font size="15.0" />
          </font>
