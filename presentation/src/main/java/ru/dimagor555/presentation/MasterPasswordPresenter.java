@@ -26,6 +26,10 @@ public class MasterPasswordPresenter {
         } else {
             view.hideOldPasswordField();
         }
+        view.hideOldPasswordIncorrectError();
+        view.hideNewPasswordLengthError();
+        view.hideNewPasswordDoNotMatchesError();
+        view.clearFields();
     }
 
     public void setMasterPassword() {
@@ -127,5 +131,7 @@ public class MasterPasswordPresenter {
         void disableButtons();
 
         void enableButtons();
+
+        void clearFields();
     }
 }
