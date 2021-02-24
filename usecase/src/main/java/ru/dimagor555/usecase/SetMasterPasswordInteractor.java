@@ -25,8 +25,8 @@ public class SetMasterPasswordInteractor extends Interactor implements SetMaster
         executeMain(() -> {
             Optional<MasterPassword> masterPassword = masterPasswordRepository.get();
             if (masterPassword.isPresent()) {
-                if (oldPassword != null && oldPassword.length() > 16
-                        && oldPassword.length() < 200 && !oldPassword.isBlank()) {
+                if (oldPassword != null && oldPassword.length() >= 16
+                        && oldPassword.length() <= 200 && !oldPassword.isBlank()) {
                     var password = masterPassword.get();
                     String salt = password.getSalt();
                     String oldPasswordHash = hasher.hashPassword(oldPassword, salt);
@@ -50,6 +50,8 @@ public class SetMasterPasswordInteractor extends Interactor implements SetMaster
                     } else {
                         executePost(callback::onOldPasswordIncorrect);
                     }
+                } else {
+                    executePost(callback::onOldPasswordIncorrect);
                 }
             } else {
                 setNewMasterPassword(newPassword, callback);

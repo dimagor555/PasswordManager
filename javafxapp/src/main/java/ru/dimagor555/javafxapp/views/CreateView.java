@@ -4,15 +4,15 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import ru.dimagor555.presentation.UpdatePresenter;
+import ru.dimagor555.presentation.CreatePresenter;
 
-public class UpdateView implements UpdatePresenter.View {
+public class CreateView implements CreatePresenter.View {
 
     @FXML
     private Button btnGeneratePassword;
 
     @FXML
-    private Button btnUpdate;
+    private Button btnCreate;
 
     @FXML
     private Button btnCancel;
@@ -41,20 +41,20 @@ public class UpdateView implements UpdatePresenter.View {
     @FXML
     private Label lblPasswordError;
 
-    private UpdatePresenter presenter;
+    private CreatePresenter presenter;
 
-    public UpdateView() {
+    public CreateView() {
 
     }
 
-    public UpdateView(Parent root,UpdatePresenter  presenter) {
+    public CreateView(Parent root, CreatePresenter presenter) {
         this.presenter = presenter;
         presenter.setView(this);
 
         btnGeneratePassword = (Button) root.lookup("#btnGeneratePassword");
         btnGeneratePassword.setOnAction(event -> onPasswordGenerateClicked());
-        btnUpdate = (Button) root.lookup("#btnUpdate");
-        btnUpdate.setOnAction(event -> onUpdateClicked());
+        btnCreate = (Button) root.lookup("#btnCreate");
+        btnCreate.setOnAction(event -> onCreateClicked());
         btnCancel = (Button) root.lookup("#btnCancel");
         btnCancel.setOnAction(event -> onCancelClicked());
 
@@ -78,14 +78,13 @@ public class UpdateView implements UpdatePresenter.View {
         presenter.generatePassword();
     }
 
-    private void onUpdateClicked() {
-        presenter.updateRecord();
+    private void onCreateClicked() {
+        presenter.createRecord();
     }
 
     private void onCancelClicked() {
         presenter.cancel();
     }
-
 
     @Override
     public void showSiteError() {
@@ -118,18 +117,15 @@ public class UpdateView implements UpdatePresenter.View {
     }
 
     @Override
-    public void showSite(String site) {
-        fieldSite.setText(site);
-    }
-
-    @Override
-    public void showLogin(String login) {
-        fieldLogin.setText(login);
-    }
-
-    @Override
     public void showPassword(String password) {
         fieldPassword.setText(password);
+    }
+
+    @Override
+    public void clearFields() {
+        fieldSite.clear();
+        fieldLogin.clear();
+        fieldPassword.clear();
     }
 
     @Override
@@ -155,5 +151,17 @@ public class UpdateView implements UpdatePresenter.View {
     @Override
     public boolean isSpecialSymbolsSelected() {
         return checkBoxSpecialSymbols.isSelected();
+    }
+
+    @Override
+    public void disableButtons() {
+        btnCreate.setDisable(true);
+        btnCancel.setDisable(true);
+    }
+
+    @Override
+    public void enableButtons() {
+        btnCreate.setDisable(false);
+        btnCancel.setDisable(false);
     }
 }

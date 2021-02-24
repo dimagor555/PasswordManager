@@ -19,12 +19,17 @@ public class MasterPasswordPresenter {
     }
 
     public void reset(boolean oldPasswordExists) {
+        enable();
         oldPasswordExistsMode = oldPasswordExists;
         if (oldPasswordExistsMode) {
             view.showOldPasswordField();
         } else {
             view.hideOldPasswordField();
         }
+        view.hideOldPasswordIncorrectError();
+        view.hideNewPasswordLengthError();
+        view.hideNewPasswordDoNotMatchesError();
+        view.clearFields();
     }
 
     public void setMasterPassword() {
@@ -126,5 +131,7 @@ public class MasterPasswordPresenter {
         void disableButtons();
 
         void enableButtons();
+
+        void clearFields();
     }
 }

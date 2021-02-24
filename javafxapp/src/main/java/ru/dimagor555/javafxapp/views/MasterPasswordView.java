@@ -135,4 +135,11 @@ public class MasterPasswordView implements MasterPasswordPresenter.View {
         btnSet.setDisable(false);
         btnCancel.setDisable(false);
     }
+
+    @Override
+    public void clearFields() {
+        fieldOldPassword.clear();
+        fieldNewPassword1.clear();
+        fieldNewPassword2.clear();
+    }
 }

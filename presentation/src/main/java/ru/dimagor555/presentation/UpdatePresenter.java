@@ -29,6 +29,7 @@ public class UpdatePresenter extends CreateUpdatePresenter {
     }
 
     public void reset(Record record) {
+        enable();
         currentRecordId = record.getId();
         view.hideSiteError();
         view.hideLoginError();
@@ -41,6 +42,9 @@ public class UpdatePresenter extends CreateUpdatePresenter {
     }
 
     public void updateRecord() {
+        if (operationQueried) {
+            return;
+        }
         if (validateRecord()) {
             String site = view.getSite();
             String login = view.getLogin();
@@ -52,6 +56,7 @@ public class UpdatePresenter extends CreateUpdatePresenter {
     }
 
     private void executeUpdateRecord(String site, String login, String encryptedPassword) {
+        disable();
         Record toUpdate = new Record(currentRecordId, site, login, encryptedPassword);
         updateRecord.execute(toUpdate, new UpdateRecord.Callback() {
             @Override
@@ -63,16 +68,19 @@ public class UpdatePresenter extends CreateUpdatePresenter {
             @Override
             public void onRecordAlreadyExistError() {
                 navigator.showRecordAlreadyExistsDialog();
+                enable();
             }
 
             @Override
             public void onRecordNotFoundError() {
                 navigator.showRecordNotFoundDialog();
+                enable();
             }
 
             @Override
             public void onDatabaseError(String message) {
                 navigator.showDatabaseErrorDialog(message);
+                enable();
             }
         });
     }

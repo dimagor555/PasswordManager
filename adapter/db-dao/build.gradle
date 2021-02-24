@@ -1,23 +1,9 @@
-plugins {
-    id 'java'
-}
-
-group 'ru.dimagor555'
-version '1.0-SNAPSHOT'
-
-java {
-    modularity.inferModulePath = true
-}
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 
     implementation 'org.hibernate:hibernate-core:5.4.27.Final'
+    implementation 'org.hibernate:hibernate-c3p0:5.4.27.Final'
     implementation 'com.h2database:h2:1.4.200'
 
     implementation(project(':domain'))

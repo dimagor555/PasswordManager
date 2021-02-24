@@ -6,6 +6,7 @@ import ru.dimagor555.usecase.DeleteRecord;
 public class DeletePresenter {
     private final DeleteRecord deleteRecord;
     private final Navigator navigator;
+    private boolean deleteQueried = false;
     private Record currentRecord;
     private View view;
 
@@ -19,6 +20,7 @@ public class DeletePresenter {
     }
 
     public void reset(Record toDelete) {
+        enable();
         currentRecord = toDelete;
         view.setText("Are you sure you want to delete record for\n" +
                 "site: " + toDelete.getSite() + "\n" +
@@ -27,6 +29,10 @@ public class DeletePresenter {
     }
 
     public void acceptDelete() {
+        if (deleteQueried) {
+            return;
+        }
+        disable();
         deleteRecord.execute(currentRecord, new DeleteRecord.Callback() {
             @Override
             public void onRecordDeleted() {
@@ -37,6 +43,7 @@ public class DeletePresenter {
             @Override
             public void onDatabaseError(String message) {
                 navigator.showDatabaseErrorDialog(message);
+                enable();
             }
         });
     }
@@ -45,9 +52,23 @@ public class DeletePresenter {
         navigator.closeDeleteWindow();
     }
 
+    private void disable() {
+        deleteQueried = true;
+        view.disableButtons();
+    }
+
+    private void enable() {
+        deleteQueried = false;
+        view.enableButtons();
+    }
+
     public interface View {
         void setText(String text);
         
         void setFocusOnCancelBtn();
+
+        void disableButtons();
+
+        void enableButtons();
     }
 }

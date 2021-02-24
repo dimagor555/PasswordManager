@@ -1,17 +1,5 @@
 plugins {
-    id 'java'
     id 'org.openjfx.javafxplugin' version '0.0.8'
-}
-
-group 'ru.dimagor555'
-version '1.0-SNAPSHOT'
-
-java {
-    modularity.inferModulePath = true
-}
-
-repositories {
-    mavenCentral()
 }
 
 dependencies {

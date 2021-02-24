@@ -1,18 +1,3 @@
-plugins {
-    id 'java'
-}
-
-group 'ru.dimagor555'
-version '1.0-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
-
-java {
-    modularity.inferModulePath = true
-}
-
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
