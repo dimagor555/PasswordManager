@@ -1,6 +1,7 @@
 package ru.dimagor555.javafxapp.windows;
 
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class StageFactory {
@@ -13,6 +14,7 @@ public class StageFactory {
         setCss(scene, type);
         stage.setScene(scene);
         stage.setTitle(getTitle(type));
+        stage.getIcons().add(new Image("/icon.png"));
         return stage;
     }
 
