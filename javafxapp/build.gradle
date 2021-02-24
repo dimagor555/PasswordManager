@@ -1,23 +1,12 @@
 plugins {
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.8'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
     id 'org.beryx.jlink' version '2.23.3'
 }
-
-group 'ru.dimagor555'
-version '1.0-SNAPSHOT'
 
 compileJava {
     sourceCompatibility = 14
     targetCompatibility = 14
-}
-
-java {
-    modularity.inferModulePath = true
-}
-
-repositories {
-    mavenCentral()
 }
 
 dependencies {
@@ -45,11 +34,13 @@ javafx {
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
-mainClassName = "ru.dimagor555.javafxapp.Main"
+application {
+    mainModule = "javafxapp"
+    mainClass = "ru.dimagor555.javafxapp.Main"
+}
 
 jlink {
     options = ['--bind-services', '--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
-    addOptions('--suggest-providers');
     launcher {
         name = 'PasswordManager'
     }
@@ -82,30 +73,23 @@ jlink {
 
         uses 'org.jboss.logging.LoggerProvider';
         uses 'javax.persistence.spi.PersistenceProvider';
-        uses 'org.hibernate.integrator.spi.Integrator'
-        uses 'org.hibernate.boot.registry.selector.StrategyRegistrationProvider'
-        uses 'javax.xml.bind.JAXBContextFactory'
-        uses 'org.hibernate.service.spi.ServiceContributor'
-        uses 'org.hibernate.boot.spi.MetadataSourcesContributor'
-        uses 'org.hibernate.boot.spi.MetadataBuilderInitializer'
-        uses 'org.hibernate.boot.spi.MetadataBuilderFactory'
-        uses 'org.hibernate.boot.model.TypeContributor'
-        uses 'org.hibernate.boot.spi.MetadataContributor'
-        uses 'org.hibernate.boot.spi.AdditionalJaxbMappingProducer'
-        uses 'org.hibernate.boot.spi.SessionFactoryBuilderFactory'
-        uses 'org.hibernate.service.spi.SessionFactoryServiceContributor'
-        uses 'org.hibernate.engine.transaction.jta.platform.spi.JtaPlatformProvider'
+        uses 'org.hibernate.integrator.spi.Integrator';
+        uses 'org.hibernate.boot.registry.selector.StrategyRegistrationProvider';
+        uses 'javax.xml.bind.JAXBContextFactory';
+        uses 'org.hibernate.service.spi.ServiceContributor';
+        uses 'org.hibernate.boot.spi.MetadataSourcesContributor';
+        uses 'org.hibernate.boot.spi.MetadataBuilderInitializer';
+        uses 'org.hibernate.boot.spi.MetadataBuilderFactory';
+        uses 'org.hibernate.boot.model.TypeContributor';
+        uses 'org.hibernate.boot.spi.MetadataContributor';
+        uses 'org.hibernate.boot.spi.AdditionalJaxbMappingProducer';
+        uses 'org.hibernate.boot.spi.SessionFactoryBuilderFactory';
+        uses 'org.hibernate.service.spi.SessionFactoryServiceContributor';
+        uses 'org.hibernate.engine.transaction.jta.platform.spi.JtaPlatformProvider';
 
         provides 'org.apache.commons.logging.LogFactory' with 'org.apache.commons.logging.LogFactoryService';
         provides 'javax.persistence.spi.PersistenceProvider' with 'org.hibernate.jpa.HibernatePersistenceProvider';
         provides 'java.sql.Driver' with 'org.h2.Driver';
-    }
-}
-
-jar {
-    manifest {
-        attributes(
-                'Main-Class': 'ru.dimagor555.javafxapp.Main'
-        )
+        provides 'org.hibernate.boot.registry.selector.StrategyRegistrationProvider' with 'org.hibernate.c3p0.internal.StrategyRegistrationProviderImpl';
     }
 }

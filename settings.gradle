@@ -1,6 +1,6 @@
 rootProject.name = 'password-manager'
 include 'domain'
-include 'javafx'
+include 'javafxapp'
 include 'usecase'
 include 'presentation'
 include 'adapter:repository'
