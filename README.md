@@ -18,4 +18,20 @@ For other OS:
 - Create, update and delete records
 - Search records
 - Generate passwords with and without special symbols
-- Easily copy your passwords to the clipboard
+- Easily copy your passwords to the clipboard    
+## Screenshots
+#### Login window  
+![Login](https://github.com/dimagor555/PasswordManager/raw/master/images-for-readme/login.png)  
+#### Set master password window  
+![Set master password](https://github.com/dimagor555/PasswordManager/raw/master/images-for-readme/masterpassword.png)
+#### Main window  
+![Main](https://github.com/dimagor555/PasswordManager/raw/master/images-for-readme/main.png)
+#### Create window  
+![Create](https://github.com/dimagor555/PasswordManager/raw/master/images-for-readme/create.png)
+#### Update window  
+![Update](https://github.com/dimagor555/PasswordManager/raw/master/images-for-readme/update.png)
+#### Delete window  
+![Delete](https://github.com/dimagor555/PasswordManager/raw/master/images-for-readme/delete.png)
+#### Search by nickname and site in main window  
+![Search by nickname](https://github.com/dimagor555/PasswordManager/raw/master/images-for-readme/main-search-1.png)
+![Search by site](https://github.com/dimagor555/PasswordManager/raw/master/images-for-readme/main-search-2.png)
