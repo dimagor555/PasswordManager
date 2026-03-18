@@ -1,3 +1,5 @@
 # Project exclude paths
 /.gradle/
-/.idea/
+/.idea/build/
+.DS_Store
+._.DS_Store

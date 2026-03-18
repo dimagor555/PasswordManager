@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.dimagor555.javafxapp.views.DeleteView">
+   <children>
+      <Text fx:id="text" layoutX="31.0" layoutY="29.0" text="Are you sure you want to delete record for site login" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Button fx:id="btnAccept" layoutX="82.0" layoutY="148.0" mnemonicParsing="false" text="Delete" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="60.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnCancel" cancelButton="true" layoutX="280.0" layoutY="148.0" mnemonicParsing="false" text="Cancel" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="60.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

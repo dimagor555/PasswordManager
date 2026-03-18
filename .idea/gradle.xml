@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="corretto-15" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/adapter" />
+            <option value="$PROJECT_DIR$/adapter/clipboard" />
+            <option value="$PROJECT_DIR$/adapter/cryption" />
+            <option value="$PROJECT_DIR$/adapter/db-dao" />
+            <option value="$PROJECT_DIR$/adapter/hasher" />
+            <option value="$PROJECT_DIR$/adapter/id-generator" />
+            <option value="$PROJECT_DIR$/adapter/password-generator" />
+            <option value="$PROJECT_DIR$/adapter/repository" />
+            <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/javafxapp" />
+            <option value="$PROJECT_DIR$/presentation" />
+            <option value="$PROJECT_DIR$/usecase" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

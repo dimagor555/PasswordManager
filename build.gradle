@@ -2,9 +2,6 @@ plugins {
     id "org.javamodularity.moduleplugin" version "1.6.0"
 }
 
-group 'ru.dimagor555'
-version '1.0-SNAPSHOT'
-
 subprojects {
     apply plugin: 'java-library'
     apply plugin: 'org.javamodularity.moduleplugin'
